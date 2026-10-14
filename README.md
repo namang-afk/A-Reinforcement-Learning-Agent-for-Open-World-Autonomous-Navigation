@@ -88,8 +88,8 @@ This project demonstrates end-to-end reinforcement learning applied to autonomou
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/rl-autonomous-navigation.git
-cd rl-autonomous-navigation
+git clone https://github.com/namang-afk/A-Reinforcement-Learning-Agent-for-Open-World-Autonomous-Navigation.git
+cd A-Reinforcement-Learning-Agent-for-Open-World-Autonomous-Navigation
 
 # Create a virtual environment (recommended)
 python -m venv venv
@@ -108,12 +108,23 @@ pip install -r requirements.txt
 
 ## Usage
 
-### 1. Run Tests
+### 1. Launch Interactive Web Dashboard (Recommended)
+Watch the trained PPO agent navigate in real time, compare against A* and Random baselines, or take manual keyboard control!
+
+```bash
+# Start the web dashboard (auto-launches your browser at http://localhost:8000)
+python dashboard.py
+
+# Custom port
+python dashboard.py --port 8080
+```
+
+### 2. Run Tests
 ```bash
 pytest tests/ -v
 ```
 
-### 2. Train the Agent
+### 3. Train the Agent
 ```bash
 # Default training (500K timesteps)
 python train.py
@@ -128,12 +139,12 @@ python train.py --timesteps 1000000 --seed 123 --grid-size 25
 python train.py --resume models/ppo_nav_checkpoint_100000_steps
 ```
 
-### 3. Monitor Training (TensorBoard)
+### 4. Monitor Training (TensorBoard)
 ```bash
 tensorboard --logdir logs/
 ```
 
-### 4. Evaluate
+### 5. Evaluate
 ```bash
 # Evaluate all policies (PPO, Random, A*)
 python evaluate.py
@@ -142,7 +153,7 @@ python evaluate.py
 python evaluate.py --model models/ppo_navigation_final --episodes 200
 ```
 
-### 5. Generate Visualizations
+### 6. Generate Visualizations
 ```bash
 python visualize.py
 
@@ -155,7 +166,12 @@ python visualize.py --show
 ## Project Structure
 
 ```
-rl-autonomous-navigation/
+A-Reinforcement-Learning-Agent-for-Open-World-Autonomous-Navigation/
+├── dashboard.py           # Interactive Web/GUI dashboard backend server
+├── web/                   # Frontend assets for live dashboard
+│   ├── index.html         # Glassmorphic UI with canvas viewport & HUD
+│   ├── style.css          # Dark slate/cyan styling system
+│   └── app.js             # Canvas rendering, telemetry & playback engine
 ├── config.py              # Centralized configuration (hyperparameters, paths)
 ├── environment.py         # Custom Gymnasium grid navigation environment
 ├── train.py               # PPO training pipeline with checkpoints & logging
@@ -163,14 +179,14 @@ rl-autonomous-navigation/
 ├── baselines.py           # Random and A* baseline policies
 ├── visualize.py           # Trajectory plots, training curves, comparisons
 ├── requirements.txt       # Pinned dependencies
-├── README.md              # This file
+├── README.md              # Documentation and interview guide
 ├── tests/
 │   ├── __init__.py
-│   └── test_environment.py  # 20+ automated tests
-├── models/                # Saved model checkpoints (created during training)
-├── logs/                  # TensorBoard logs (created during training)
-├── results/               # Evaluation results JSON (created during evaluation)
-└── figures/               # Saved visualization plots (created during visualization)
+│   └── test_environment.py  # 31 automated pytest tests
+├── models/                # Saved model checkpoints
+├── logs/                  # TensorBoard logs & evaluation logs
+├── results/               # Evaluation results JSON
+└── figures/               # Saved visualization plots
 ```
 
 ---
