@@ -1,0 +1,25 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs & TensorBoard
+logs/
+
+# Model checkpoints (keep directory structure if needed, or track final models)
+# Uncomment the line below if you don't want to track large checkpoint files
+# models/*.zip
+
+# OS artifacts
+.DS_Store
+Thumbs.db

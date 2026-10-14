@@ -1,0 +1,35 @@
+{
+  "PPO Agent": {
+    "policy_name": "PPO Agent",
+    "n_episodes": 15,
+    "success_rate": 0.0,
+    "avg_episode_length": 196.0,
+    "avg_reward": -10.73333333333331,
+    "collision_rate": 0.06666666666666667,
+    "avg_path_efficiency": null,
+    "std_reward": 4.4492196569236215,
+    "std_episode_length": 14.966629547095765
+  },
+  "Random": {
+    "policy_name": "Random",
+    "n_episodes": 15,
+    "success_rate": 0.0,
+    "avg_episode_length": 7.2,
+    "avg_reward": -11.053333333333336,
+    "collision_rate": 1.0,
+    "avg_path_efficiency": null,
+    "std_reward": 2.973632271967885,
+    "std_episode_length": 7.350283441246784
+  },
+  "A*": {
+    "policy_name": "A*",
+    "n_episodes": 15,
+    "success_rate": 0.8,
+    "avg_episode_length": 13.333333333333334,
+    "avg_reward": 88.59999999999998,
+    "collision_rate": 0.2,
+    "avg_path_efficiency": 1.0,
+    "std_reward": 47.366823832720726,
+    "std_episode_length": 5.399588461684423
+  }
+}
