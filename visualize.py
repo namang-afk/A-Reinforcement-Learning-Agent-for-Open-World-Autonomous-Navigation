@@ -12,7 +12,28 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 from typing import Any, Dict, List, Optional, Tuple
+
+# Auto-relaunch inside local venv if executed from system Python
+def _ensure_venv():
+    if hasattr(sys, "real_prefix") or (hasattr(sys, "base_prefix") and sys.base_prefix != sys.prefix):
+        return
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    venv_python = (
+        os.path.join(base_dir, "venv", "Scripts", "python.exe")
+        if sys.platform == "win32"
+        else os.path.join(base_dir, "venv", "bin", "python")
+    )
+    if os.path.exists(venv_python) and os.path.abspath(sys.executable) != os.path.abspath(venv_python):
+        import subprocess
+        try:
+            res = subprocess.run([venv_python] + sys.argv)
+            sys.exit(res.returncode)
+        except Exception:
+            pass
+
+_ensure_venv()
 
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
