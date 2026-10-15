@@ -21,8 +21,13 @@ const state = {
   isSuccess: false,
   policy: 'ppo',
   isPlaying: false,
+  isRunningFull: false,
+  isStepping: false,
   playSpeed: 5, // steps per second
   intervalId: null,
+  animTimer: null,
+  stepAbortController: null,
+  generationId: 0,
   seed: 42,
   episodeHistory: []
 };
@@ -91,7 +96,18 @@ async function checkBackendStatus() {
 }
 
 async function resetEnvironment(newMap = false) {
+  // 1. Immediately pause and cancel any running simulation or animation
   pause();
+
+  // 2. Advance generation counter to immediately invalidate any in-flight step responses
+  const currentGen = ++state.generationId;
+
+  // 3. Abort in-flight network request if one is active
+  if (state.stepAbortController) {
+    try { state.stepAbortController.abort(); } catch (e) {}
+    state.stepAbortController = null;
+  }
+  state.isStepping = false;
 
   const payload = {
     grid_size: parseInt(gridSizeSlider.value),
@@ -107,7 +123,12 @@ async function resetEnvironment(newMap = false) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
+
+    // If another reset occurred while this was in flight, discard this older response
+    if (currentGen !== state.generationId) return;
+
     const data = await res.json();
+    if (currentGen !== state.generationId) return;
 
     state.grid = data.grid;
     state.gridSize = data.grid_size;
@@ -124,14 +145,18 @@ async function resetEnvironment(newMap = false) {
     state.isTruncated = false;
     state.isSuccess = false;
 
+    actionChosenBadge.textContent = '--';
     updateUI();
     renderMainGrid();
     renderSensorView();
 
     if (newMap) {
       showToast(`Generated Map Seed #${payload.seed}`, '🗺️');
+    } else {
+      showToast('Agent Reset to Start Position', '↺');
     }
   } catch (err) {
+    if (err.name === 'AbortError') return;
     console.error('Reset error:', err);
     showToast('Failed to reset environment', '⚠️');
   }
@@ -142,6 +167,14 @@ async function stepEnvironment(manualAction = null) {
     pause();
     return;
   }
+  if (state.isStepping) {
+    return; // Don't stack parallel step requests
+  }
+
+  const currentGen = state.generationId;
+  state.isStepping = true;
+  const controller = new AbortController();
+  state.stepAbortController = controller;
 
   const payload = {
     policy: state.policy,
@@ -152,9 +185,13 @@ async function stepEnvironment(manualAction = null) {
     const res = await fetch('/api/step', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
+      signal: controller.signal
     });
     const data = await res.json();
+
+    // Check if reset was pressed while request was in-flight
+    if (currentGen !== state.generationId) return;
 
     state.agentPos = data.agent_pos;
     state.dynamicObstacles = data.dynamic_obstacles || [];
@@ -188,15 +225,25 @@ async function stepEnvironment(manualAction = null) {
       recordEpisodeHistory('TIMEOUT');
     }
   } catch (err) {
+    if (err.name === 'AbortError') return;
     console.error('Step error:', err);
     pause();
+  } finally {
+    state.isStepping = false;
+    if (state.stepAbortController === controller) {
+      state.stepAbortController = null;
+    }
   }
 }
 
 async function runFullEpisode() {
   pause();
+  state.isRunningFull = true;
+  btnRunFull.disabled = true;
+  btnStep.disabled = true;
   showToast('Simulating episode...', '⚡');
 
+  const currentGen = state.generationId;
   const payload = {
     policy: state.policy,
     grid_size: parseInt(gridSizeSlider.value),
@@ -211,26 +258,38 @@ async function runFullEpisode() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
+
+    if (currentGen !== state.generationId || !state.isRunningFull) return;
+
     const data = await res.json();
+    if (currentGen !== state.generationId || !state.isRunningFull) return;
 
     // Animate the simulated episode smoothly
     let frameIdx = 0;
-    const frames = data.frames;
+    const frames = data.frames || [];
     const interval = Math.max(1000 / state.playSpeed, 40);
 
-    const animTimer = setInterval(() => {
-      if (frameIdx >= frames.length) {
-        clearInterval(animTimer);
-        const last = frames[frames.length - 1];
-        if (last.is_success) {
-          showToast(`Episode Solved in ${last.steps} steps!`, '🏆');
-          recordEpisodeHistory('SUCCESS');
-        } else if (last.terminated) {
-          showToast('Collision occurred', '💥');
-          recordEpisodeHistory('COLLISION');
-        } else {
-          showToast('Episode ended', '🏁');
-          recordEpisodeHistory('TIMEOUT');
+    state.animTimer = setInterval(() => {
+      // If user reset, paused, or reached end of frames
+      if (currentGen !== state.generationId || !state.isRunningFull || frameIdx >= frames.length) {
+        clearInterval(state.animTimer);
+        state.animTimer = null;
+        state.isRunningFull = false;
+        btnRunFull.disabled = false;
+        btnStep.disabled = false;
+
+        if (currentGen === state.generationId && frames.length > 0 && frameIdx >= frames.length) {
+          const last = frames[frames.length - 1];
+          if (last.is_success) {
+            showToast(`Episode Solved in ${last.steps} steps!`, '🏆');
+            recordEpisodeHistory('SUCCESS');
+          } else if (last.terminated) {
+            showToast('Collision occurred', '💥');
+            recordEpisodeHistory('COLLISION');
+          } else {
+            showToast('Episode ended', '🏁');
+            recordEpisodeHistory('TIMEOUT');
+          }
         }
         return;
       }
@@ -255,8 +314,15 @@ async function runFullEpisode() {
       frameIdx++;
     }, interval);
   } catch (err) {
+    if (currentGen !== state.generationId) return;
     console.error('Run episode error:', err);
     showToast('Failed to run full episode', '⚠️');
+  } finally {
+    if (currentGen === state.generationId && !state.animTimer) {
+      state.isRunningFull = false;
+      btnRunFull.disabled = false;
+      btnStep.disabled = false;
+    }
   }
 }
 
@@ -487,11 +553,23 @@ function recordEpisodeHistory(result) {
 
 function play() {
   if (state.isPlaying) return;
+  // If already at terminal state, reset first before starting playback
+  if (state.isTerminated || state.isTruncated) {
+    resetEnvironment(false).then(() => {
+      startPlayLoop();
+    });
+    return;
+  }
+  startPlayLoop();
+}
+
+function startPlayLoop() {
   state.isPlaying = true;
   btnPlay.textContent = '⏸ Pause';
-  btnPlay.classList.add('btn-primary');
+  btnPlay.classList.remove('btn-primary');
+  btnPlay.classList.add('btn-secondary');
 
-  const interval = 1000 / state.playSpeed;
+  const interval = Math.max(1000 / state.playSpeed, 40);
   state.intervalId = setInterval(() => {
     stepEnvironment();
   }, interval);
@@ -499,10 +577,25 @@ function play() {
 
 function pause() {
   state.isPlaying = false;
+  state.isRunningFull = false;
+
   btnPlay.textContent = '▶ Play';
+  btnPlay.classList.remove('btn-secondary');
+  btnPlay.classList.add('btn-primary');
+  btnRunFull.disabled = false;
+  btnStep.disabled = false;
+
   if (state.intervalId) {
     clearInterval(state.intervalId);
     state.intervalId = null;
+  }
+  if (state.animTimer) {
+    clearInterval(state.animTimer);
+    state.animTimer = null;
+  }
+  if (state.stepAbortController) {
+    try { state.stepAbortController.abort(); } catch (e) {}
+    state.stepAbortController = null;
   }
 }
 

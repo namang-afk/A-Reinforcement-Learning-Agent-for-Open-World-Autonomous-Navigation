@@ -38,6 +38,7 @@ _ensure_venv()
 
 import argparse
 import json
+import threading
 import webbrowser
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -99,6 +100,7 @@ class SimulationManager:
         self.current_obs: Optional[np.ndarray] = None
         self.cum_reward: float = 0.0
         self.seed: int = 42
+        self.lock = threading.RLock()
 
     def _load_ppo_model(self):
         # Prefer best_model.zip if available, fallback to final or default
@@ -124,60 +126,62 @@ class SimulationManager:
         seed: int = 42,
     ) -> Dict[str, Any]:
         """Reset environment with given parameters."""
-        self.current_config = EnvConfig(
-            grid_size=grid_size,
-            wall_density=wall_density,
-            num_dynamic_obstacles=num_dynamic_obstacles,
-        )
-        self.env = GridNavigationEnv(config=self.current_config)
-        self.seed = seed
-        self.cum_reward = 0.0
-        self._last_agent_pos = None
+        with self.lock:
+            self.current_config = EnvConfig(
+                grid_size=grid_size,
+                wall_density=wall_density,
+                num_dynamic_obstacles=num_dynamic_obstacles,
+            )
+            self.env = GridNavigationEnv(config=self.current_config)
+            self.seed = seed
+            self.cum_reward = 0.0
+            self._last_agent_pos = None
 
-        self.current_obs, info = self.env.reset(seed=seed)
-        self.astar_policy.set_env(self.env)
+            self.current_obs, info = self.env.reset(seed=seed)
+            self.astar_policy.set_env(self.env)
 
-        return self._format_state(0.0, False, False, False, None)
+            return self._format_state(0.0, False, False, False, None)
 
     def step(self, policy_type: str, manual_action: Optional[int] = None) -> Dict[str, Any]:
         """Take a single step using the specified policy."""
-        action = 0
+        with self.lock:
+            action = 0
 
-        if policy_type == "manual" and manual_action is not None:
-            action = int(manual_action)
-        elif policy_type == "astar":
-            self.astar_policy.set_env(self.env)
-            action, _ = self.astar_policy.predict(self.current_obs)
-        elif policy_type == "random":
-            action, _ = self.random_policy.predict(self.current_obs)
-        else:
-            # PPO
-            if self.ppo_model is not None:
-                # If agent was blocked by a wall in the last step, sample stochastically to detour
-                use_det = True
-                if self._last_agent_pos is not None and self._last_agent_pos == self.env.agent_pos:
-                    use_det = False
-                action, _ = self.ppo_model.predict(self.current_obs, deterministic=use_det)
-            else:
-                # Fallback to random if no PPO model is loaded
+            if policy_type == "manual" and manual_action is not None:
+                action = int(manual_action)
+            elif policy_type == "astar":
+                self.astar_policy.set_env(self.env)
+                action, _ = self.astar_policy.predict(self.current_obs)
+            elif policy_type == "random":
                 action, _ = self.random_policy.predict(self.current_obs)
+            else:
+                # PPO
+                if self.ppo_model is not None:
+                    # If agent was blocked by a wall in the last step, sample stochastically to detour
+                    use_det = True
+                    if self._last_agent_pos is not None and self._last_agent_pos == self.env.agent_pos:
+                        use_det = False
+                    action, _ = self.ppo_model.predict(self.current_obs, deterministic=use_det)
+                else:
+                    # Fallback to random if no PPO model is loaded
+                    action, _ = self.random_policy.predict(self.current_obs)
 
-        # Convert action to int
-        if hasattr(action, "item"):
-            action = int(action.item())
-        else:
-            action = int(action)
+            # Convert action to int
+            if hasattr(action, "item"):
+                action = int(action.item())
+            else:
+                action = int(action)
 
-        self._last_agent_pos = self.env.agent_pos
-        obs, reward, terminated, truncated, info = self.env.step(action)
-        self.current_obs = obs
-        self.cum_reward += reward
+            self._last_agent_pos = self.env.agent_pos
+            obs, reward, terminated, truncated, info = self.env.step(action)
+            self.current_obs = obs
+            self.cum_reward += reward
 
-        # Update A* env binding
-        self.astar_policy.set_env(self.env)
+            # Update A* env binding
+            self.astar_policy.set_env(self.env)
 
-        is_success = info.get("is_success", False)
-        return self._format_state(reward, terminated, truncated, is_success, action)
+            is_success = info.get("is_success", False)
+            return self._format_state(reward, terminated, truncated, is_success, action)
 
     def run_full_episode(
         self,
@@ -189,18 +193,19 @@ class SimulationManager:
         max_steps: int = 200,
     ) -> Dict[str, Any]:
         """Run an entire episode and return all frames."""
-        start_state = self.reset(grid_size, wall_density, num_dynamic_obstacles, seed)
-        frames = [start_state]
+        with self.lock:
+            start_state = self.reset(grid_size, wall_density, num_dynamic_obstacles, seed)
+            frames = [start_state]
 
-        done = False
-        steps = 0
-        while not done and steps < max_steps:
-            state = self.step(policy_type)
-            frames.append(state)
-            done = state["terminated"] or state["truncated"]
-            steps += 1
+            done = False
+            steps = 0
+            while not done and steps < max_steps:
+                state = self.step(policy_type)
+                frames.append(state)
+                done = state["terminated"] or state["truncated"]
+                steps += 1
 
-        return {"frames": frames}
+            return {"frames": frames}
 
     def _format_state(
         self,
