@@ -111,7 +111,7 @@ class SimulationManager:
         if os.path.exists(load_path):
             try:
                 self.ppo_model = PPO.load(load_path, device="cpu")
-                self.smart_policy = SmartNavigationPolicy(self.ppo_model, history_len=8)
+                self.smart_policy = SmartNavigationPolicy(self.ppo_model, history_len=16)
                 print(f"[Dashboard] Loaded PPO model + Smart Working Memory from: {load_path}")
             except Exception as e:
                 print(f"[Dashboard] Warning: Could not load PPO model: {e}")

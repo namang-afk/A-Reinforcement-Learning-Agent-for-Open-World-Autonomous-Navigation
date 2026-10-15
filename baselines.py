@@ -193,7 +193,7 @@ class SmartNavigationPolicy:
       3. Dead-end traps (forces exploration of alternative open corridors)
     """
 
-    def __init__(self, model: Any, history_len: int = 8):
+    def __init__(self, model: Any, history_len: int = 16):
         self.model = model
         self.history_len = history_len
         from collections import deque
@@ -242,24 +242,22 @@ class SmartNavigationPolicy:
             action, _ = self.model.predict(obs, deterministic=deterministic)
             return int(action), None
 
-        # 3. Rank valid actions by neural network preference
-        ranked_actions = sorted(valid_candidates, key=lambda a: probs[a], reverse=True)
-
-        # 4. Anti-oscillation: check if top action reverses into cell visited 1 or 2 steps ago
-        prev_pos_1 = self.recent_positions[-2] if len(self.recent_positions) >= 2 else None
-        prev_pos_2 = self.recent_positions[-3] if len(self.recent_positions) >= 3 else None
-
-        non_reversing = []
-        for a in ranked_actions:
+        # 3. Separate candidate actions into unvisited (fresh) vs already in recent history
+        unvisited = []
+        for a in valid_candidates:
             dr, dc = env.ACTION_DELTAS[a]
             nxt = (r + dr, c + dc)
-            if nxt != prev_pos_1 and nxt != prev_pos_2:
-                non_reversing.append(a)
+            if nxt not in self.recent_positions:
+                unvisited.append(a)
 
-        if non_reversing:
-            return int(non_reversing[0]), None
+        # 4. If any unvisited direction exists, choose the one preferred by the neural network!
+        # This completely breaks 2-cell, 3-cell, 4-cell square loops or cycles of ANY shape!
+        if unvisited:
+            unvisited.sort(key=lambda a: probs[a], reverse=True)
+            return int(unvisited[0]), None
 
-        # If all candidates would reverse into recent history, pick least visited candidate
+        # 5. If all neighbors have been visited recently (e.g. backtracking out of a dead-end),
+        # prioritize the cell with the lowest total visits across the episode, breaking ties with PPO probability!
         ranked_by_visits = sorted(
             valid_candidates,
             key=lambda a: (

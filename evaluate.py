@@ -272,7 +272,7 @@ def evaluate_all(
     # --- PPO Agent with Working Memory ---
     print(f"\n  Loading PPO model from {load_path}...")
     model = PPO.load(load_path)
-    smart_policy = SmartNavigationPolicy(model, history_len=8)
+    smart_policy = SmartNavigationPolicy(model, history_len=16)
     results["PPO Agent"] = evaluate_policy(
         smart_policy, "PPO Agent", env_config, eval_config
     )
