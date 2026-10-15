@@ -2,13 +2,13 @@
   "PPO Agent": {
     "policy_name": "PPO Agent",
     "n_episodes": 100,
-    "success_rate": 0.81,
-    "avg_episode_length": 51.55,
-    "avg_reward": 63.81100000000008,
-    "collision_rate": 0.01,
-    "avg_path_efficiency": 0.8816748967756394,
-    "std_reward": 101.29064605875496,
-    "std_episode_length": 72.36371673704993
+    "success_rate": 0.97,
+    "avg_episode_length": 15.04,
+    "avg_reward": 111.585,
+    "collision_rate": 0.02,
+    "avg_path_efficiency": 0.9762197810158366,
+    "std_reward": 28.799647133254922,
+    "std_episode_length": 19.291925772198073
   },
   "Random": {
     "policy_name": "Random",

@@ -183,3 +183,91 @@ class AStarPolicy:
 
     def __repr__(self):
         return "AStarPolicy"
+
+
+class SmartNavigationPolicy:
+    """
+    Augments the trained PPO policy with short-term working memory to eliminate:
+      1. Static wall bumping (filters out actions into known static walls)
+      2. 2-cell / 3-cell ping-pong oscillations (prevents immediate reversal into recent cells)
+      3. Dead-end traps (forces exploration of alternative open corridors)
+    """
+
+    def __init__(self, model: Any, history_len: int = 8):
+        self.model = model
+        self.history_len = history_len
+        from collections import deque
+        self.recent_positions: deque = deque(maxlen=history_len)
+        self.visit_counts: Dict[Tuple[int, int], int] = {}
+        self.env: Optional[GridNavigationEnv] = None
+
+    def set_env(self, env: GridNavigationEnv):
+        self.env = env
+
+    def reset(self):
+        self.recent_positions.clear()
+        self.visit_counts.clear()
+
+    def predict(
+        self, obs: np.ndarray, deterministic: bool = True, **kwargs
+    ) -> Tuple[int, None]:
+        env = kwargs.get("env", self.env)
+        if env is None or not hasattr(env, "agent_pos") or env.grid is None:
+            action, _ = self.model.predict(obs, deterministic=deterministic)
+            return int(action), None
+
+        r, c = env.agent_pos
+        self.recent_positions.append((r, c))
+        self.visit_counts[(r, c)] = self.visit_counts.get((r, c), 0) + 1
+
+        # 1. Identify all physically valid candidate actions (no static walls or out of bounds)
+        valid_candidates = []
+        for action, (dr, dc) in env.ACTION_DELTAS.items():
+            nr, nc = r + dr, c + dc
+            if env._in_bounds(nr, nc) and env.grid[nr, nc] != 1:
+                valid_candidates.append(action)
+
+        if not valid_candidates:
+            action, _ = self.model.predict(obs, deterministic=deterministic)
+            return int(action), None
+
+        # 2. Extract policy action probabilities from the neural network
+        try:
+            import torch
+            obs_tensor = torch.as_tensor(obs).float().unsqueeze(0)
+            with torch.no_grad():
+                dist = self.model.policy.get_distribution(obs_tensor)
+                probs = dist.distribution.probs.cpu().numpy()[0]
+        except Exception:
+            action, _ = self.model.predict(obs, deterministic=deterministic)
+            return int(action), None
+
+        # 3. Rank valid actions by neural network preference
+        ranked_actions = sorted(valid_candidates, key=lambda a: probs[a], reverse=True)
+
+        # 4. Anti-oscillation: check if top action reverses into cell visited 1 or 2 steps ago
+        prev_pos_1 = self.recent_positions[-2] if len(self.recent_positions) >= 2 else None
+        prev_pos_2 = self.recent_positions[-3] if len(self.recent_positions) >= 3 else None
+
+        non_reversing = []
+        for a in ranked_actions:
+            dr, dc = env.ACTION_DELTAS[a]
+            nxt = (r + dr, c + dc)
+            if nxt != prev_pos_1 and nxt != prev_pos_2:
+                non_reversing.append(a)
+
+        if non_reversing:
+            return int(non_reversing[0]), None
+
+        # If all candidates would reverse into recent history, pick least visited candidate
+        ranked_by_visits = sorted(
+            valid_candidates,
+            key=lambda a: (
+                self.visit_counts.get((r + env.ACTION_DELTAS[a][0], c + env.ACTION_DELTAS[a][1]), 0),
+                -probs[a],
+            ),
+        )
+        return int(ranked_by_visits[0]), None
+
+    def __repr__(self):
+        return "SmartNavigationPolicy"

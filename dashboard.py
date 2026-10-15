@@ -51,7 +51,7 @@ try:
 
     from config import EnvConfig, ENV_CONFIG
     from environment import GridNavigationEnv
-    from baselines import RandomPolicy, AStarPolicy
+    from baselines import RandomPolicy, AStarPolicy, SmartNavigationPolicy
 except ImportError as err:
     print("\n" + "=" * 65)
     print("  [!] Missing Dependencies Error")
@@ -85,6 +85,7 @@ class SimulationManager:
     def __init__(self, model_path: Optional[str] = None):
         self.model_path = model_path or DEFAULT_MODEL_PATH
         self.ppo_model: Optional[PPO] = None
+        self.smart_policy: Optional[SmartNavigationPolicy] = None
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
 
         # Load PPO model if available
@@ -110,13 +111,16 @@ class SimulationManager:
         if os.path.exists(load_path):
             try:
                 self.ppo_model = PPO.load(load_path, device="cpu")
-                print(f"[Dashboard] Loaded PPO model from: {load_path}")
+                self.smart_policy = SmartNavigationPolicy(self.ppo_model, history_len=8)
+                print(f"[Dashboard] Loaded PPO model + Smart Working Memory from: {load_path}")
             except Exception as e:
                 print(f"[Dashboard] Warning: Could not load PPO model: {e}")
                 self.ppo_model = None
+                self.smart_policy = None
         else:
             print(f"[Dashboard] Notice: No model found at {load_path}. Baselines will be available.")
             self.ppo_model = None
+            self.smart_policy = None
 
     def reset(
         self,
@@ -137,6 +141,9 @@ class SimulationManager:
             self.cum_reward = 0.0
             self._last_agent_pos = None
 
+            if self.smart_policy is not None:
+                self.smart_policy.reset()
+
             self.current_obs, info = self.env.reset(seed=seed)
             self.astar_policy.set_env(self.env)
 
@@ -155,15 +162,13 @@ class SimulationManager:
             elif policy_type == "random":
                 action, _ = self.random_policy.predict(self.current_obs)
             else:
-                # PPO
-                if self.ppo_model is not None:
-                    # If agent was blocked by a wall in the last step, sample stochastically to detour
-                    use_det = True
-                    if self._last_agent_pos is not None and self._last_agent_pos == self.env.agent_pos:
-                        use_det = False
-                    action, _ = self.ppo_model.predict(self.current_obs, deterministic=use_det)
+                # PPO with Smart Working Memory (prevents dead-end & ping-pong loops)
+                if self.smart_policy is not None:
+                    self.smart_policy.set_env(self.env)
+                    action, _ = self.smart_policy.predict(self.current_obs)
+                elif self.ppo_model is not None:
+                    action, _ = self.ppo_model.predict(self.current_obs, deterministic=True)
                 else:
-                    # Fallback to random if no PPO model is loaded
                     action, _ = self.random_policy.predict(self.current_obs)
 
             # Convert action to int

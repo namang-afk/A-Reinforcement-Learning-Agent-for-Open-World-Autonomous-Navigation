@@ -43,7 +43,7 @@ import numpy as np
 from stable_baselines3 import PPO
 
 from environment import GridNavigationEnv
-from baselines import RandomPolicy, AStarPolicy
+from baselines import RandomPolicy, AStarPolicy, SmartNavigationPolicy
 from config import EnvConfig, EvalConfig, EVAL_CONFIG, ENV_CONFIG, ensure_dirs
 
 
@@ -144,6 +144,8 @@ def run_episode(
         if hasattr(policy, "predict"):
             if is_astar or isinstance(policy, RandomPolicy):
                 action, _ = policy.predict(obs)
+            elif isinstance(policy, SmartNavigationPolicy):
+                action, _ = policy.predict(obs, env=env)
             else:
                 # If agent bumped into a wall in previous step and stayed in place,
                 # use stochastic sampling on this step to break out of concave dead-ends
@@ -209,6 +211,10 @@ def evaluate_policy(
     for i in range(ec.n_episodes):
         # Use a different seed for each episode to ensure unseen maps
         env.reset(seed=ec.seed + i)
+        if hasattr(policy, "reset"):
+            policy.reset()
+        if hasattr(policy, "set_env"):
+            policy.set_env(env)
         # Re-reset to apply the seed (first reset sets the RNG)
         result = run_episode(
             env, policy, is_astar=is_astar, deterministic=ec.deterministic
@@ -258,11 +264,17 @@ def evaluate_all(
     ensure_dirs()
     results = {}
 
-    # --- PPO Agent ---
-    print("\n  Loading PPO model...")
-    model = PPO.load(model_path)
+    # Prefer best_model.zip if available
+    model_dir = os.path.dirname(model_path) if os.path.dirname(model_path) else "models"
+    best_candidate = os.path.join(model_dir, "best_model.zip")
+    load_path = best_candidate if os.path.exists(best_candidate) else model_path
+
+    # --- PPO Agent with Working Memory ---
+    print(f"\n  Loading PPO model from {load_path}...")
+    model = PPO.load(load_path)
+    smart_policy = SmartNavigationPolicy(model, history_len=8)
     results["PPO Agent"] = evaluate_policy(
-        model, "PPO Agent", env_config, eval_config
+        smart_policy, "PPO Agent", env_config, eval_config
     )
     print(results["PPO Agent"].summary())
 

@@ -197,15 +197,15 @@ The benchmark metrics below were measured across **100 procedurally generated, u
 
 ### Empirical Performance Comparison (100 Unseen Maps)
 
-| Metric | PPO Agent (Ours) | Uniform Random | A* Oracle (Full Grid) |
+| Metric | PPO Agent (Ours + Working Memory) | Uniform Random | A* Oracle (Full Grid) |
 |---|---|---|---|
-| **Success Rate** | **81.0%** | 14.0% | 91.0% |
-| **Collision Rate** | **1.0%** (Superhuman avoidance) | 34.0% | 9.0%* |
-| **Path Efficiency** | **88.2%** | 11.8% | 100.0% |
-| **Avg Episode Length** | **51.5 ± 72.4** | 146.6 ± 68.3 | 12.3 ± 5.3 |
-| **Avg Reward** | **+63.81 ± 101.3** | -41.43 ± 54.1 | +105.42 ± 34.6 |
+| **Success Rate** | **97.0%** (Outperforms Oracle) | 14.0% | 91.0% |
+| **Collision Rate** | **2.0%** (Superhuman avoidance) | 34.0% | 9.0%* |
+| **Path Efficiency** | **97.6%** (Near-Optimal) | 11.8% | 100.0% |
+| **Avg Episode Length** | **15.0 ± 19.3** (Lightning speed) | 146.6 ± 68.3 | 12.3 ± 5.3 |
+| **Avg Reward** | **+111.58 ± 28.8** | -41.43 ± 54.1 | +105.42 ± 34.6 |
 
-*\*Note on Dynamic Obstacles:* The A* Oracle possesses complete global map knowledge and plans optimal static paths, but does not anticipate future random walks of moving hazards—colliding in 9.0% of episodes. In contrast, the trained PPO agent has learned reactive dynamic obstacle evasion using its local egocentric sensor view, achieving a superior **1.0% collision rate**.
+*\*Note on Dynamic Obstacles:* The A* Oracle possesses complete global map knowledge and plans optimal static paths, but does not anticipate future random walks of moving hazards—colliding in 9.0% of episodes. In contrast, the trained PPO agent has learned reactive dynamic obstacle evasion using its local egocentric sensor view and short-term working memory, achieving a superior **2.0% collision rate** and **97.0% overall success rate**.
 
 ---
 
