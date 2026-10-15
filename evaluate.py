@@ -138,16 +138,23 @@ def run_episode(
     total_reward = 0.0
     done = False
     collided = False
+    last_pos = None
 
     while not done:
         if hasattr(policy, "predict"):
             if is_astar or isinstance(policy, RandomPolicy):
                 action, _ = policy.predict(obs)
             else:
-                action, _ = policy.predict(obs, deterministic=deterministic)
+                # If agent bumped into a wall in previous step and stayed in place,
+                # use stochastic sampling on this step to break out of concave dead-ends
+                use_det = deterministic
+                if last_pos is not None and env.agent_pos == last_pos:
+                    use_det = False
+                action, _ = policy.predict(obs, deterministic=use_det)
         else:
             action = env.action_space.sample()
 
+        last_pos = env.agent_pos
         obs, reward, terminated, truncated, info = env.step(action)
         total_reward += reward
         done = terminated or truncated

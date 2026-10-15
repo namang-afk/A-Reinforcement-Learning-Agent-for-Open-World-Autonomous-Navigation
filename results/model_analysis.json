@@ -1,0 +1,362 @@
+[
+  {
+    "filename": "ppo_nav_checkpoint_25000_steps.zip",
+    "size_kb": 1771.7,
+    "last_modified": "Thu Oct 15 11:36:27 2026",
+    "net_arch": [
+      256,
+      256
+    ],
+    "total_params": 148229,
+    "policy_params": 74500,
+    "value_params": 73729,
+    "gamma": 0.99,
+    "learning_rate": 0.0003,
+    "ent_coef": 0.05,
+    "clip_range": {
+      ":type:": "<class 'function'>",
+      ":serialized:": "gAWV/gMAAAAAAACMF2Nsb3VkcGlja2xlLmNsb3VkcGlja2xllIwOX21ha2VfZnVuY3Rpb26Uk5QoaACMDV9idWlsdGluX3R5cGWUk5SMCENvZGVUeXBllIWUUpQoSwFLAEsASwFLBUsTQzSVAZcAdAEAAAAAAAAAAAAAAgCJAXwApgEAAKsBAAAAAAAAAACmAQAAqwEAAAAAAAAAAFMAlE6FlIwFZmxvYXSUhZSMEnByb2dyZXNzX3JlbWFpbmluZ5SFlIxxQzpcVXNlcnNcTEVOT1ZPXERlc2t0b3BcT3Blbi1Xb3JsZCBBdXRvbm9tb3VzIE5hdmlnYXRpb25cdmVudlxMaWJcc2l0ZS1wYWNrYWdlc1xzdGFibGVfYmFzZWxpbmVzM1xjb21tb25cdXRpbHMucHmUjAg8bGFtYmRhPpSMIWdldF9zY2hlZHVsZV9mbi48bG9jYWxzPi48bGFtYmRhPpRLYUMa+IAApWWoTqhO0DtN0SxO1CxO0SZP1CZPgACUQwCUjA52YWx1ZV9zY2hlZHVsZZSFlCl0lFKUfZQojAtfX3BhY2thZ2VfX5SMGHN0YWJsZV9iYXNlbGluZXMzLmNvbW1vbpSMCF9fbmFtZV9flIwec3RhYmxlX2Jhc2VsaW5lczMuY29tbW9uLnV0aWxzlIwIX19maWxlX1+UaA51Tk5oAIwQX21ha2VfZW1wdHlfY2VsbJSTlClSlIWUdJRSlGgAjBJfZnVuY3Rpb25fc2V0c3RhdGWUk5RoIn2UfZQoaBqMCDxsYW1iZGE+lIwMX19xdWFsbmFtZV9flIwhZ2V0X3NjaGVkdWxlX2ZuLjxsb2NhbHM+LjxsYW1iZGE+lIwPX19hbm5vdGF0aW9uc19flH2UjA5fX2t3ZGVmYXVsdHNfX5ROjAxfX2RlZmF1bHRzX1+UTowKX19tb2R1bGVfX5RoG4wHX19kb2NfX5ROjAtfX2Nsb3N1cmVfX5RoAIwKX21ha2VfY2VsbJSTlGgCKGgHKEsBSwBLAEsBSwFLE0MIlQGXAIkBUwCUaAkpjAFflIWUaA6MBGZ1bmOUjBljb25zdGFudF9mbi48bG9jYWxzPi5mdW5jlEuFQwj4gADYDxKICpRoEowDdmFslIWUKXSUUpRoF05OaB4pUpSFlHSUUpRoJGhAfZR9lChoGowEZnVuY5RoKIwZY29uc3RhbnRfZm4uPGxvY2Fscz4uZnVuY5RoKn2UaCxOaC1OaC5oG2gvTmgwaDJHP8mZmZmZmZqFlFKUhZSMF19jbG91ZHBpY2tsZV9zdWJtb2R1bGVzlF2UjAtfX2dsb2JhbHNfX5R9lHWGlIZSMIWUUpSFlGhJXZRoS32UdYaUhlIwLg=="
+    },
+    "performance": {
+      "episodes": 20,
+      "success_rate": 65.0,
+      "collision_rate": 0.0,
+      "timeout_rate": 35.0,
+      "path_efficiency": 95.3,
+      "avg_length": 78.3,
+      "std_length": 89.4,
+      "avg_reward": 4.9,
+      "std_reward": 150.5
+    }
+  },
+  {
+    "filename": "ppo_nav_checkpoint_50000_steps.zip",
+    "size_kb": 1771.7,
+    "last_modified": "Thu Oct 15 11:36:43 2026",
+    "net_arch": [
+      256,
+      256
+    ],
+    "total_params": 148229,
+    "policy_params": 74500,
+    "value_params": 73729,
+    "gamma": 0.99,
+    "learning_rate": 0.0003,
+    "ent_coef": 0.05,
+    "clip_range": {
+      ":type:": "<class 'function'>",
+      ":serialized:": "gAWV/gMAAAAAAACMF2Nsb3VkcGlja2xlLmNsb3VkcGlja2xllIwOX21ha2VfZnVuY3Rpb26Uk5QoaACMDV9idWlsdGluX3R5cGWUk5SMCENvZGVUeXBllIWUUpQoSwFLAEsASwFLBUsTQzSVAZcAdAEAAAAAAAAAAAAAAgCJAXwApgEAAKsBAAAAAAAAAACmAQAAqwEAAAAAAAAAAFMAlE6FlIwFZmxvYXSUhZSMEnByb2dyZXNzX3JlbWFpbmluZ5SFlIxxQzpcVXNlcnNcTEVOT1ZPXERlc2t0b3BcT3Blbi1Xb3JsZCBBdXRvbm9tb3VzIE5hdmlnYXRpb25cdmVudlxMaWJcc2l0ZS1wYWNrYWdlc1xzdGFibGVfYmFzZWxpbmVzM1xjb21tb25cdXRpbHMucHmUjAg8bGFtYmRhPpSMIWdldF9zY2hlZHVsZV9mbi48bG9jYWxzPi48bGFtYmRhPpRLYUMa+IAApWWoTqhO0DtN0SxO1CxO0SZP1CZPgACUQwCUjA52YWx1ZV9zY2hlZHVsZZSFlCl0lFKUfZQojAtfX3BhY2thZ2VfX5SMGHN0YWJsZV9iYXNlbGluZXMzLmNvbW1vbpSMCF9fbmFtZV9flIwec3RhYmxlX2Jhc2VsaW5lczMuY29tbW9uLnV0aWxzlIwIX19maWxlX1+UaA51Tk5oAIwQX21ha2VfZW1wdHlfY2VsbJSTlClSlIWUdJRSlGgAjBJfZnVuY3Rpb25fc2V0c3RhdGWUk5RoIn2UfZQoaBqMCDxsYW1iZGE+lIwMX19xdWFsbmFtZV9flIwhZ2V0X3NjaGVkdWxlX2ZuLjxsb2NhbHM+LjxsYW1iZGE+lIwPX19hbm5vdGF0aW9uc19flH2UjA5fX2t3ZGVmYXVsdHNfX5ROjAxfX2RlZmF1bHRzX1+UTowKX19tb2R1bGVfX5RoG4wHX19kb2NfX5ROjAtfX2Nsb3N1cmVfX5RoAIwKX21ha2VfY2VsbJSTlGgCKGgHKEsBSwBLAEsBSwFLE0MIlQGXAIkBUwCUaAkpjAFflIWUaA6MBGZ1bmOUjBljb25zdGFudF9mbi48bG9jYWxzPi5mdW5jlEuFQwj4gADYDxKICpRoEowDdmFslIWUKXSUUpRoF05OaB4pUpSFlHSUUpRoJGhAfZR9lChoGowEZnVuY5RoKIwZY29uc3RhbnRfZm4uPGxvY2Fscz4uZnVuY5RoKn2UaCxOaC1OaC5oG2gvTmgwaDJHP8mZmZmZmZqFlFKUhZSMF19jbG91ZHBpY2tsZV9zdWJtb2R1bGVzlF2UjAtfX2dsb2JhbHNfX5R9lHWGlIZSMIWUUpSFlGhJXZRoS32UdYaUhlIwLg=="
+    },
+    "performance": {
+      "episodes": 20,
+      "success_rate": 60.0,
+      "collision_rate": 0.0,
+      "timeout_rate": 40.0,
+      "path_efficiency": 87.6,
+      "avg_length": 94.4,
+      "std_length": 90.3,
+      "avg_reward": -21.6,
+      "std_reward": 153.6
+    }
+  },
+  {
+    "filename": "ppo_nav_checkpoint_75000_steps.zip",
+    "size_kb": 1771.7,
+    "last_modified": "Thu Oct 15 11:36:57 2026",
+    "net_arch": [
+      256,
+      256
+    ],
+    "total_params": 148229,
+    "policy_params": 74500,
+    "value_params": 73729,
+    "gamma": 0.99,
+    "learning_rate": 0.0003,
+    "ent_coef": 0.05,
+    "clip_range": {
+      ":type:": "<class 'function'>",
+      ":serialized:": "gAWV/gMAAAAAAACMF2Nsb3VkcGlja2xlLmNsb3VkcGlja2xllIwOX21ha2VfZnVuY3Rpb26Uk5QoaACMDV9idWlsdGluX3R5cGWUk5SMCENvZGVUeXBllIWUUpQoSwFLAEsASwFLBUsTQzSVAZcAdAEAAAAAAAAAAAAAAgCJAXwApgEAAKsBAAAAAAAAAACmAQAAqwEAAAAAAAAAAFMAlE6FlIwFZmxvYXSUhZSMEnByb2dyZXNzX3JlbWFpbmluZ5SFlIxxQzpcVXNlcnNcTEVOT1ZPXERlc2t0b3BcT3Blbi1Xb3JsZCBBdXRvbm9tb3VzIE5hdmlnYXRpb25cdmVudlxMaWJcc2l0ZS1wYWNrYWdlc1xzdGFibGVfYmFzZWxpbmVzM1xjb21tb25cdXRpbHMucHmUjAg8bGFtYmRhPpSMIWdldF9zY2hlZHVsZV9mbi48bG9jYWxzPi48bGFtYmRhPpRLYUMa+IAApWWoTqhO0DtN0SxO1CxO0SZP1CZPgACUQwCUjA52YWx1ZV9zY2hlZHVsZZSFlCl0lFKUfZQojAtfX3BhY2thZ2VfX5SMGHN0YWJsZV9iYXNlbGluZXMzLmNvbW1vbpSMCF9fbmFtZV9flIwec3RhYmxlX2Jhc2VsaW5lczMuY29tbW9uLnV0aWxzlIwIX19maWxlX1+UaA51Tk5oAIwQX21ha2VfZW1wdHlfY2VsbJSTlClSlIWUdJRSlGgAjBJfZnVuY3Rpb25fc2V0c3RhdGWUk5RoIn2UfZQoaBqMCDxsYW1iZGE+lIwMX19xdWFsbmFtZV9flIwhZ2V0X3NjaGVkdWxlX2ZuLjxsb2NhbHM+LjxsYW1iZGE+lIwPX19hbm5vdGF0aW9uc19flH2UjA5fX2t3ZGVmYXVsdHNfX5ROjAxfX2RlZmF1bHRzX1+UTowKX19tb2R1bGVfX5RoG4wHX19kb2NfX5ROjAtfX2Nsb3N1cmVfX5RoAIwKX21ha2VfY2VsbJSTlGgCKGgHKEsBSwBLAEsBSwFLE0MIlQGXAIkBUwCUaAkpjAFflIWUaA6MBGZ1bmOUjBljb25zdGFudF9mbi48bG9jYWxzPi5mdW5jlEuFQwj4gADYDxKICpRoEowDdmFslIWUKXSUUpRoF05OaB4pUpSFlHSUUpRoJGhAfZR9lChoGowEZnVuY5RoKIwZY29uc3RhbnRfZm4uPGxvY2Fscz4uZnVuY5RoKn2UaCxOaC1OaC5oG2gvTmgwaDJHP8mZmZmZmZqFlFKUhZSMF19jbG91ZHBpY2tsZV9zdWJtb2R1bGVzlF2UjAtfX2dsb2JhbHNfX5R9lHWGlIZSMIWUUpSFlGhJXZRoS32UdYaUhlIwLg=="
+    },
+    "performance": {
+      "episodes": 20,
+      "success_rate": 50.0,
+      "collision_rate": 0.0,
+      "timeout_rate": 50.0,
+      "path_efficiency": 100.0,
+      "avg_length": 105.7,
+      "std_length": 94.4,
+      "avg_reward": -46.0,
+      "std_reward": 160.5
+    }
+  },
+  {
+    "filename": "ppo_nav_checkpoint_100000_steps.zip",
+    "size_kb": 1771.7,
+    "last_modified": "Thu Oct 15 11:37:11 2026",
+    "net_arch": [
+      256,
+      256
+    ],
+    "total_params": 148229,
+    "policy_params": 74500,
+    "value_params": 73729,
+    "gamma": 0.99,
+    "learning_rate": 0.0003,
+    "ent_coef": 0.05,
+    "clip_range": {
+      ":type:": "<class 'function'>",
+      ":serialized:": "gAWV/gMAAAAAAACMF2Nsb3VkcGlja2xlLmNsb3VkcGlja2xllIwOX21ha2VfZnVuY3Rpb26Uk5QoaACMDV9idWlsdGluX3R5cGWUk5SMCENvZGVUeXBllIWUUpQoSwFLAEsASwFLBUsTQzSVAZcAdAEAAAAAAAAAAAAAAgCJAXwApgEAAKsBAAAAAAAAAACmAQAAqwEAAAAAAAAAAFMAlE6FlIwFZmxvYXSUhZSMEnByb2dyZXNzX3JlbWFpbmluZ5SFlIxxQzpcVXNlcnNcTEVOT1ZPXERlc2t0b3BcT3Blbi1Xb3JsZCBBdXRvbm9tb3VzIE5hdmlnYXRpb25cdmVudlxMaWJcc2l0ZS1wYWNrYWdlc1xzdGFibGVfYmFzZWxpbmVzM1xjb21tb25cdXRpbHMucHmUjAg8bGFtYmRhPpSMIWdldF9zY2hlZHVsZV9mbi48bG9jYWxzPi48bGFtYmRhPpRLYUMa+IAApWWoTqhO0DtN0SxO1CxO0SZP1CZPgACUQwCUjA52YWx1ZV9zY2hlZHVsZZSFlCl0lFKUfZQojAtfX3BhY2thZ2VfX5SMGHN0YWJsZV9iYXNlbGluZXMzLmNvbW1vbpSMCF9fbmFtZV9flIwec3RhYmxlX2Jhc2VsaW5lczMuY29tbW9uLnV0aWxzlIwIX19maWxlX1+UaA51Tk5oAIwQX21ha2VfZW1wdHlfY2VsbJSTlClSlIWUdJRSlGgAjBJfZnVuY3Rpb25fc2V0c3RhdGWUk5RoIn2UfZQoaBqMCDxsYW1iZGE+lIwMX19xdWFsbmFtZV9flIwhZ2V0X3NjaGVkdWxlX2ZuLjxsb2NhbHM+LjxsYW1iZGE+lIwPX19hbm5vdGF0aW9uc19flH2UjA5fX2t3ZGVmYXVsdHNfX5ROjAxfX2RlZmF1bHRzX1+UTowKX19tb2R1bGVfX5RoG4wHX19kb2NfX5ROjAtfX2Nsb3N1cmVfX5RoAIwKX21ha2VfY2VsbJSTlGgCKGgHKEsBSwBLAEsBSwFLE0MIlQGXAIkBUwCUaAkpjAFflIWUaA6MBGZ1bmOUjBljb25zdGFudF9mbi48bG9jYWxzPi5mdW5jlEuFQwj4gADYDxKICpRoEowDdmFslIWUKXSUUpRoF05OaB4pUpSFlHSUUpRoJGhAfZR9lChoGowEZnVuY5RoKIwZY29uc3RhbnRfZm4uPGxvY2Fscz4uZnVuY5RoKn2UaCxOaC1OaC5oG2gvTmgwaDJHP8mZmZmZmZqFlFKUhZSMF19jbG91ZHBpY2tsZV9zdWJtb2R1bGVzlF2UjAtfX2dsb2JhbHNfX5R9lHWGlIZSMIWUUpSFlGhJXZRoS32UdYaUhlIwLg=="
+    },
+    "performance": {
+      "episodes": 20,
+      "success_rate": 50.0,
+      "collision_rate": 0.0,
+      "timeout_rate": 50.0,
+      "path_efficiency": 96.9,
+      "avg_length": 105.6,
+      "std_length": 94.4,
+      "avg_reward": -45.7,
+      "std_reward": 158.8
+    }
+  },
+  {
+    "filename": "ppo_nav_checkpoint_125000_steps.zip",
+    "size_kb": 1771.7,
+    "last_modified": "Thu Oct 15 11:37:25 2026",
+    "net_arch": [
+      256,
+      256
+    ],
+    "total_params": 148229,
+    "policy_params": 74500,
+    "value_params": 73729,
+    "gamma": 0.99,
+    "learning_rate": 0.0003,
+    "ent_coef": 0.05,
+    "clip_range": {
+      ":type:": "<class 'function'>",
+      ":serialized:": "gAWV/gMAAAAAAACMF2Nsb3VkcGlja2xlLmNsb3VkcGlja2xllIwOX21ha2VfZnVuY3Rpb26Uk5QoaACMDV9idWlsdGluX3R5cGWUk5SMCENvZGVUeXBllIWUUpQoSwFLAEsASwFLBUsTQzSVAZcAdAEAAAAAAAAAAAAAAgCJAXwApgEAAKsBAAAAAAAAAACmAQAAqwEAAAAAAAAAAFMAlE6FlIwFZmxvYXSUhZSMEnByb2dyZXNzX3JlbWFpbmluZ5SFlIxxQzpcVXNlcnNcTEVOT1ZPXERlc2t0b3BcT3Blbi1Xb3JsZCBBdXRvbm9tb3VzIE5hdmlnYXRpb25cdmVudlxMaWJcc2l0ZS1wYWNrYWdlc1xzdGFibGVfYmFzZWxpbmVzM1xjb21tb25cdXRpbHMucHmUjAg8bGFtYmRhPpSMIWdldF9zY2hlZHVsZV9mbi48bG9jYWxzPi48bGFtYmRhPpRLYUMa+IAApWWoTqhO0DtN0SxO1CxO0SZP1CZPgACUQwCUjA52YWx1ZV9zY2hlZHVsZZSFlCl0lFKUfZQojAtfX3BhY2thZ2VfX5SMGHN0YWJsZV9iYXNlbGluZXMzLmNvbW1vbpSMCF9fbmFtZV9flIwec3RhYmxlX2Jhc2VsaW5lczMuY29tbW9uLnV0aWxzlIwIX19maWxlX1+UaA51Tk5oAIwQX21ha2VfZW1wdHlfY2VsbJSTlClSlIWUdJRSlGgAjBJfZnVuY3Rpb25fc2V0c3RhdGWUk5RoIn2UfZQoaBqMCDxsYW1iZGE+lIwMX19xdWFsbmFtZV9flIwhZ2V0X3NjaGVkdWxlX2ZuLjxsb2NhbHM+LjxsYW1iZGE+lIwPX19hbm5vdGF0aW9uc19flH2UjA5fX2t3ZGVmYXVsdHNfX5ROjAxfX2RlZmF1bHRzX1+UTowKX19tb2R1bGVfX5RoG4wHX19kb2NfX5ROjAtfX2Nsb3N1cmVfX5RoAIwKX21ha2VfY2VsbJSTlGgCKGgHKEsBSwBLAEsBSwFLE0MIlQGXAIkBUwCUaAkpjAFflIWUaA6MBGZ1bmOUjBljb25zdGFudF9mbi48bG9jYWxzPi5mdW5jlEuFQwj4gADYDxKICpRoEowDdmFslIWUKXSUUpRoF05OaB4pUpSFlHSUUpRoJGhAfZR9lChoGowEZnVuY5RoKIwZY29uc3RhbnRfZm4uPGxvY2Fscz4uZnVuY5RoKn2UaCxOaC1OaC5oG2gvTmgwaDJHP8mZmZmZmZqFlFKUhZSMF19jbG91ZHBpY2tsZV9zdWJtb2R1bGVzlF2UjAtfX2dsb2JhbHNfX5R9lHWGlIZSMIWUUpSFlGhJXZRoS32UdYaUhlIwLg=="
+    },
+    "performance": {
+      "episodes": 20,
+      "success_rate": 55.0,
+      "collision_rate": 0.0,
+      "timeout_rate": 45.0,
+      "path_efficiency": 97.2,
+      "avg_length": 96.8,
+      "std_length": 93.3,
+      "avg_reward": -26.7,
+      "std_reward": 157.6
+    }
+  },
+  {
+    "filename": "ppo_nav_checkpoint_150000_steps.zip",
+    "size_kb": 1771.7,
+    "last_modified": "Thu Oct 15 11:37:39 2026",
+    "net_arch": [
+      256,
+      256
+    ],
+    "total_params": 148229,
+    "policy_params": 74500,
+    "value_params": 73729,
+    "gamma": 0.99,
+    "learning_rate": 0.0003,
+    "ent_coef": 0.05,
+    "clip_range": {
+      ":type:": "<class 'function'>",
+      ":serialized:": "gAWV/gMAAAAAAACMF2Nsb3VkcGlja2xlLmNsb3VkcGlja2xllIwOX21ha2VfZnVuY3Rpb26Uk5QoaACMDV9idWlsdGluX3R5cGWUk5SMCENvZGVUeXBllIWUUpQoSwFLAEsASwFLBUsTQzSVAZcAdAEAAAAAAAAAAAAAAgCJAXwApgEAAKsBAAAAAAAAAACmAQAAqwEAAAAAAAAAAFMAlE6FlIwFZmxvYXSUhZSMEnByb2dyZXNzX3JlbWFpbmluZ5SFlIxxQzpcVXNlcnNcTEVOT1ZPXERlc2t0b3BcT3Blbi1Xb3JsZCBBdXRvbm9tb3VzIE5hdmlnYXRpb25cdmVudlxMaWJcc2l0ZS1wYWNrYWdlc1xzdGFibGVfYmFzZWxpbmVzM1xjb21tb25cdXRpbHMucHmUjAg8bGFtYmRhPpSMIWdldF9zY2hlZHVsZV9mbi48bG9jYWxzPi48bGFtYmRhPpRLYUMa+IAApWWoTqhO0DtN0SxO1CxO0SZP1CZPgACUQwCUjA52YWx1ZV9zY2hlZHVsZZSFlCl0lFKUfZQojAtfX3BhY2thZ2VfX5SMGHN0YWJsZV9iYXNlbGluZXMzLmNvbW1vbpSMCF9fbmFtZV9flIwec3RhYmxlX2Jhc2VsaW5lczMuY29tbW9uLnV0aWxzlIwIX19maWxlX1+UaA51Tk5oAIwQX21ha2VfZW1wdHlfY2VsbJSTlClSlIWUdJRSlGgAjBJfZnVuY3Rpb25fc2V0c3RhdGWUk5RoIn2UfZQoaBqMCDxsYW1iZGE+lIwMX19xdWFsbmFtZV9flIwhZ2V0X3NjaGVkdWxlX2ZuLjxsb2NhbHM+LjxsYW1iZGE+lIwPX19hbm5vdGF0aW9uc19flH2UjA5fX2t3ZGVmYXVsdHNfX5ROjAxfX2RlZmF1bHRzX1+UTowKX19tb2R1bGVfX5RoG4wHX19kb2NfX5ROjAtfX2Nsb3N1cmVfX5RoAIwKX21ha2VfY2VsbJSTlGgCKGgHKEsBSwBLAEsBSwFLE0MIlQGXAIkBUwCUaAkpjAFflIWUaA6MBGZ1bmOUjBljb25zdGFudF9mbi48bG9jYWxzPi5mdW5jlEuFQwj4gADYDxKICpRoEowDdmFslIWUKXSUUpRoF05OaB4pUpSFlHSUUpRoJGhAfZR9lChoGowEZnVuY5RoKIwZY29uc3RhbnRfZm4uPGxvY2Fscz4uZnVuY5RoKn2UaCxOaC1OaC5oG2gvTmgwaDJHP8mZmZmZmZqFlFKUhZSMF19jbG91ZHBpY2tsZV9zdWJtb2R1bGVzlF2UjAtfX2dsb2JhbHNfX5R9lHWGlIZSMIWUUpSFlGhJXZRoS32UdYaUhlIwLg=="
+    },
+    "performance": {
+      "episodes": 20,
+      "success_rate": 65.0,
+      "collision_rate": 5.0,
+      "timeout_rate": 30.0,
+      "path_efficiency": 90.4,
+      "avg_length": 75.9,
+      "std_length": 88.2,
+      "avg_reward": 4.1,
+      "std_reward": 143.3
+    }
+  },
+  {
+    "filename": "ppo_nav_checkpoint_175000_steps.zip",
+    "size_kb": 1771.7,
+    "last_modified": "Thu Oct 15 11:37:52 2026",
+    "net_arch": [
+      256,
+      256
+    ],
+    "total_params": 148229,
+    "policy_params": 74500,
+    "value_params": 73729,
+    "gamma": 0.99,
+    "learning_rate": 0.0003,
+    "ent_coef": 0.05,
+    "clip_range": {
+      ":type:": "<class 'function'>",
+      ":serialized:": "gAWV/gMAAAAAAACMF2Nsb3VkcGlja2xlLmNsb3VkcGlja2xllIwOX21ha2VfZnVuY3Rpb26Uk5QoaACMDV9idWlsdGluX3R5cGWUk5SMCENvZGVUeXBllIWUUpQoSwFLAEsASwFLBUsTQzSVAZcAdAEAAAAAAAAAAAAAAgCJAXwApgEAAKsBAAAAAAAAAACmAQAAqwEAAAAAAAAAAFMAlE6FlIwFZmxvYXSUhZSMEnByb2dyZXNzX3JlbWFpbmluZ5SFlIxxQzpcVXNlcnNcTEVOT1ZPXERlc2t0b3BcT3Blbi1Xb3JsZCBBdXRvbm9tb3VzIE5hdmlnYXRpb25cdmVudlxMaWJcc2l0ZS1wYWNrYWdlc1xzdGFibGVfYmFzZWxpbmVzM1xjb21tb25cdXRpbHMucHmUjAg8bGFtYmRhPpSMIWdldF9zY2hlZHVsZV9mbi48bG9jYWxzPi48bGFtYmRhPpRLYUMa+IAApWWoTqhO0DtN0SxO1CxO0SZP1CZPgACUQwCUjA52YWx1ZV9zY2hlZHVsZZSFlCl0lFKUfZQojAtfX3BhY2thZ2VfX5SMGHN0YWJsZV9iYXNlbGluZXMzLmNvbW1vbpSMCF9fbmFtZV9flIwec3RhYmxlX2Jhc2VsaW5lczMuY29tbW9uLnV0aWxzlIwIX19maWxlX1+UaA51Tk5oAIwQX21ha2VfZW1wdHlfY2VsbJSTlClSlIWUdJRSlGgAjBJfZnVuY3Rpb25fc2V0c3RhdGWUk5RoIn2UfZQoaBqMCDxsYW1iZGE+lIwMX19xdWFsbmFtZV9flIwhZ2V0X3NjaGVkdWxlX2ZuLjxsb2NhbHM+LjxsYW1iZGE+lIwPX19hbm5vdGF0aW9uc19flH2UjA5fX2t3ZGVmYXVsdHNfX5ROjAxfX2RlZmF1bHRzX1+UTowKX19tb2R1bGVfX5RoG4wHX19kb2NfX5ROjAtfX2Nsb3N1cmVfX5RoAIwKX21ha2VfY2VsbJSTlGgCKGgHKEsBSwBLAEsBSwFLE0MIlQGXAIkBUwCUaAkpjAFflIWUaA6MBGZ1bmOUjBljb25zdGFudF9mbi48bG9jYWxzPi5mdW5jlEuFQwj4gADYDxKICpRoEowDdmFslIWUKXSUUpRoF05OaB4pUpSFlHSUUpRoJGhAfZR9lChoGowEZnVuY5RoKIwZY29uc3RhbnRfZm4uPGxvY2Fscz4uZnVuY5RoKn2UaCxOaC1OaC5oG2gvTmgwaDJHP8mZmZmZmZqFlFKUhZSMF19jbG91ZHBpY2tsZV9zdWJtb2R1bGVzlF2UjAtfX2dsb2JhbHNfX5R9lHWGlIZSMIWUUpSFlGhJXZRoS32UdYaUhlIwLg=="
+    },
+    "performance": {
+      "episodes": 20,
+      "success_rate": 65.0,
+      "collision_rate": 0.0,
+      "timeout_rate": 35.0,
+      "path_efficiency": 91.7,
+      "avg_length": 83.7,
+      "std_length": 88.8,
+      "avg_reward": -3.4,
+      "std_reward": 150.7
+    }
+  },
+  {
+    "filename": "ppo_nav_checkpoint_200000_steps.zip",
+    "size_kb": 1771.7,
+    "last_modified": "Thu Oct 15 11:38:06 2026",
+    "net_arch": [
+      256,
+      256
+    ],
+    "total_params": 148229,
+    "policy_params": 74500,
+    "value_params": 73729,
+    "gamma": 0.99,
+    "learning_rate": 0.0003,
+    "ent_coef": 0.05,
+    "clip_range": {
+      ":type:": "<class 'function'>",
+      ":serialized:": "gAWV/gMAAAAAAACMF2Nsb3VkcGlja2xlLmNsb3VkcGlja2xllIwOX21ha2VfZnVuY3Rpb26Uk5QoaACMDV9idWlsdGluX3R5cGWUk5SMCENvZGVUeXBllIWUUpQoSwFLAEsASwFLBUsTQzSVAZcAdAEAAAAAAAAAAAAAAgCJAXwApgEAAKsBAAAAAAAAAACmAQAAqwEAAAAAAAAAAFMAlE6FlIwFZmxvYXSUhZSMEnByb2dyZXNzX3JlbWFpbmluZ5SFlIxxQzpcVXNlcnNcTEVOT1ZPXERlc2t0b3BcT3Blbi1Xb3JsZCBBdXRvbm9tb3VzIE5hdmlnYXRpb25cdmVudlxMaWJcc2l0ZS1wYWNrYWdlc1xzdGFibGVfYmFzZWxpbmVzM1xjb21tb25cdXRpbHMucHmUjAg8bGFtYmRhPpSMIWdldF9zY2hlZHVsZV9mbi48bG9jYWxzPi48bGFtYmRhPpRLYUMa+IAApWWoTqhO0DtN0SxO1CxO0SZP1CZPgACUQwCUjA52YWx1ZV9zY2hlZHVsZZSFlCl0lFKUfZQojAtfX3BhY2thZ2VfX5SMGHN0YWJsZV9iYXNlbGluZXMzLmNvbW1vbpSMCF9fbmFtZV9flIwec3RhYmxlX2Jhc2VsaW5lczMuY29tbW9uLnV0aWxzlIwIX19maWxlX1+UaA51Tk5oAIwQX21ha2VfZW1wdHlfY2VsbJSTlClSlIWUdJRSlGgAjBJfZnVuY3Rpb25fc2V0c3RhdGWUk5RoIn2UfZQoaBqMCDxsYW1iZGE+lIwMX19xdWFsbmFtZV9flIwhZ2V0X3NjaGVkdWxlX2ZuLjxsb2NhbHM+LjxsYW1iZGE+lIwPX19hbm5vdGF0aW9uc19flH2UjA5fX2t3ZGVmYXVsdHNfX5ROjAxfX2RlZmF1bHRzX1+UTowKX19tb2R1bGVfX5RoG4wHX19kb2NfX5ROjAtfX2Nsb3N1cmVfX5RoAIwKX21ha2VfY2VsbJSTlGgCKGgHKEsBSwBLAEsBSwFLE0MIlQGXAIkBUwCUaAkpjAFflIWUaA6MBGZ1bmOUjBljb25zdGFudF9mbi48bG9jYWxzPi5mdW5jlEuFQwj4gADYDxKICpRoEowDdmFslIWUKXSUUpRoF05OaB4pUpSFlHSUUpRoJGhAfZR9lChoGowEZnVuY5RoKIwZY29uc3RhbnRfZm4uPGxvY2Fscz4uZnVuY5RoKn2UaCxOaC1OaC5oG2gvTmgwaDJHP8mZmZmZmZqFlFKUhZSMF19jbG91ZHBpY2tsZV9zdWJtb2R1bGVzlF2UjAtfX2dsb2JhbHNfX5R9lHWGlIZSMIWUUpSFlGhJXZRoS32UdYaUhlIwLg=="
+    },
+    "performance": {
+      "episodes": 20,
+      "success_rate": 55.0,
+      "collision_rate": 0.0,
+      "timeout_rate": 45.0,
+      "path_efficiency": 98.6,
+      "avg_length": 96.5,
+      "std_length": 93.7,
+      "avg_reward": -22.9,
+      "std_reward": 153.5
+    }
+  },
+  {
+    "filename": "ppo_nav_checkpoint_250000_steps.zip",
+    "size_kb": 518.4,
+    "last_modified": "Thu Oct 15 11:14:53 2026",
+    "net_arch": [
+      128,
+      128
+    ],
+    "total_params": 41349,
+    "policy_params": 20868,
+    "value_params": 20481,
+    "gamma": 0.99,
+    "learning_rate": 0.0003,
+    "ent_coef": 0.01,
+    "clip_range": {
+      ":type:": "<class 'function'>",
+      ":serialized:": "gAWV/gMAAAAAAACMF2Nsb3VkcGlja2xlLmNsb3VkcGlja2xllIwOX21ha2VfZnVuY3Rpb26Uk5QoaACMDV9idWlsdGluX3R5cGWUk5SMCENvZGVUeXBllIWUUpQoSwFLAEsASwFLBUsTQzSVAZcAdAEAAAAAAAAAAAAAAgCJAXwApgEAAKsBAAAAAAAAAACmAQAAqwEAAAAAAAAAAFMAlE6FlIwFZmxvYXSUhZSMEnByb2dyZXNzX3JlbWFpbmluZ5SFlIxxQzpcVXNlcnNcTEVOT1ZPXERlc2t0b3BcT3Blbi1Xb3JsZCBBdXRvbm9tb3VzIE5hdmlnYXRpb25cdmVudlxMaWJcc2l0ZS1wYWNrYWdlc1xzdGFibGVfYmFzZWxpbmVzM1xjb21tb25cdXRpbHMucHmUjAg8bGFtYmRhPpSMIWdldF9zY2hlZHVsZV9mbi48bG9jYWxzPi48bGFtYmRhPpRLYUMa+IAApWWoTqhO0DtN0SxO1CxO0SZP1CZPgACUQwCUjA52YWx1ZV9zY2hlZHVsZZSFlCl0lFKUfZQojAtfX3BhY2thZ2VfX5SMGHN0YWJsZV9iYXNlbGluZXMzLmNvbW1vbpSMCF9fbmFtZV9flIwec3RhYmxlX2Jhc2VsaW5lczMuY29tbW9uLnV0aWxzlIwIX19maWxlX1+UaA51Tk5oAIwQX21ha2VfZW1wdHlfY2VsbJSTlClSlIWUdJRSlGgAjBJfZnVuY3Rpb25fc2V0c3RhdGWUk5RoIn2UfZQoaBqMCDxsYW1iZGE+lIwMX19xdWFsbmFtZV9flIwhZ2V0X3NjaGVkdWxlX2ZuLjxsb2NhbHM+LjxsYW1iZGE+lIwPX19hbm5vdGF0aW9uc19flH2UjA5fX2t3ZGVmYXVsdHNfX5ROjAxfX2RlZmF1bHRzX1+UTowKX19tb2R1bGVfX5RoG4wHX19kb2NfX5ROjAtfX2Nsb3N1cmVfX5RoAIwKX21ha2VfY2VsbJSTlGgCKGgHKEsBSwBLAEsBSwFLE0MIlQGXAIkBUwCUaAkpjAFflIWUaA6MBGZ1bmOUjBljb25zdGFudF9mbi48bG9jYWxzPi5mdW5jlEuFQwj4gADYDxKICpRoEowDdmFslIWUKXSUUpRoF05OaB4pUpSFlHSUUpRoJGhAfZR9lChoGowEZnVuY5RoKIwZY29uc3RhbnRfZm4uPGxvY2Fscz4uZnVuY5RoKn2UaCxOaC1OaC5oG2gvTmgwaDJHP8mZmZmZmZqFlFKUhZSMF19jbG91ZHBpY2tsZV9zdWJtb2R1bGVzlF2UjAtfX2dsb2JhbHNfX5R9lHWGlIZSMIWUUpSFlGhJXZRoS32UdYaUhlIwLg=="
+    },
+    "performance": {
+      "episodes": 20,
+      "success_rate": 45.0,
+      "collision_rate": 5.0,
+      "timeout_rate": 50.0,
+      "path_efficiency": 98.8,
+      "avg_length": 111.5,
+      "std_length": 91.4,
+      "avg_reward": -35.2,
+      "std_reward": 141.6
+    }
+  },
+  {
+    "filename": "ppo_nav_checkpoint_300000_steps.zip",
+    "size_kb": 518.4,
+    "last_modified": "Thu Oct 15 11:15:53 2026",
+    "net_arch": [
+      128,
+      128
+    ],
+    "total_params": 41349,
+    "policy_params": 20868,
+    "value_params": 20481,
+    "gamma": 0.99,
+    "learning_rate": 0.0003,
+    "ent_coef": 0.01,
+    "clip_range": {
+      ":type:": "<class 'function'>",
+      ":serialized:": "gAWV/gMAAAAAAACMF2Nsb3VkcGlja2xlLmNsb3VkcGlja2xllIwOX21ha2VfZnVuY3Rpb26Uk5QoaACMDV9idWlsdGluX3R5cGWUk5SMCENvZGVUeXBllIWUUpQoSwFLAEsASwFLBUsTQzSVAZcAdAEAAAAAAAAAAAAAAgCJAXwApgEAAKsBAAAAAAAAAACmAQAAqwEAAAAAAAAAAFMAlE6FlIwFZmxvYXSUhZSMEnByb2dyZXNzX3JlbWFpbmluZ5SFlIxxQzpcVXNlcnNcTEVOT1ZPXERlc2t0b3BcT3Blbi1Xb3JsZCBBdXRvbm9tb3VzIE5hdmlnYXRpb25cdmVudlxMaWJcc2l0ZS1wYWNrYWdlc1xzdGFibGVfYmFzZWxpbmVzM1xjb21tb25cdXRpbHMucHmUjAg8bGFtYmRhPpSMIWdldF9zY2hlZHVsZV9mbi48bG9jYWxzPi48bGFtYmRhPpRLYUMa+IAApWWoTqhO0DtN0SxO1CxO0SZP1CZPgACUQwCUjA52YWx1ZV9zY2hlZHVsZZSFlCl0lFKUfZQojAtfX3BhY2thZ2VfX5SMGHN0YWJsZV9iYXNlbGluZXMzLmNvbW1vbpSMCF9fbmFtZV9flIwec3RhYmxlX2Jhc2VsaW5lczMuY29tbW9uLnV0aWxzlIwIX19maWxlX1+UaA51Tk5oAIwQX21ha2VfZW1wdHlfY2VsbJSTlClSlIWUdJRSlGgAjBJfZnVuY3Rpb25fc2V0c3RhdGWUk5RoIn2UfZQoaBqMCDxsYW1iZGE+lIwMX19xdWFsbmFtZV9flIwhZ2V0X3NjaGVkdWxlX2ZuLjxsb2NhbHM+LjxsYW1iZGE+lIwPX19hbm5vdGF0aW9uc19flH2UjA5fX2t3ZGVmYXVsdHNfX5ROjAxfX2RlZmF1bHRzX1+UTowKX19tb2R1bGVfX5RoG4wHX19kb2NfX5ROjAtfX2Nsb3N1cmVfX5RoAIwKX21ha2VfY2VsbJSTlGgCKGgHKEsBSwBLAEsBSwFLE0MIlQGXAIkBUwCUaAkpjAFflIWUaA6MBGZ1bmOUjBljb25zdGFudF9mbi48bG9jYWxzPi5mdW5jlEuFQwj4gADYDxKICpRoEowDdmFslIWUKXSUUpRoF05OaB4pUpSFlHSUUpRoJGhAfZR9lChoGowEZnVuY5RoKIwZY29uc3RhbnRfZm4uPGxvY2Fscz4uZnVuY5RoKn2UaCxOaC1OaC5oG2gvTmgwaDJHP8mZmZmZmZqFlFKUhZSMF19jbG91ZHBpY2tsZV9zdWJtb2R1bGVzlF2UjAtfX2dsb2JhbHNfX5R9lHWGlIZSMIWUUpSFlGhJXZRoS32UdYaUhlIwLg=="
+    },
+    "performance": {
+      "episodes": 20,
+      "success_rate": 45.0,
+      "collision_rate": 5.0,
+      "timeout_rate": 50.0,
+      "path_efficiency": 78.1,
+      "avg_length": 120.3,
+      "std_length": 87.2,
+      "avg_reward": -43.8,
+      "std_reward": 136.0
+    }
+  },
+  {
+    "filename": "best_model.zip",
+    "size_kb": 1771.7,
+    "last_modified": "Thu Oct 15 11:37:39 2026",
+    "net_arch": [
+      256,
+      256
+    ],
+    "total_params": 148229,
+    "policy_params": 74500,
+    "value_params": 73729,
+    "gamma": 0.99,
+    "learning_rate": 0.0003,
+    "ent_coef": 0.05,
+    "clip_range": {
+      ":type:": "<class 'function'>",
+      ":serialized:": "gAWV/gMAAAAAAACMF2Nsb3VkcGlja2xlLmNsb3VkcGlja2xllIwOX21ha2VfZnVuY3Rpb26Uk5QoaACMDV9idWlsdGluX3R5cGWUk5SMCENvZGVUeXBllIWUUpQoSwFLAEsASwFLBUsTQzSVAZcAdAEAAAAAAAAAAAAAAgCJAXwApgEAAKsBAAAAAAAAAACmAQAAqwEAAAAAAAAAAFMAlE6FlIwFZmxvYXSUhZSMEnByb2dyZXNzX3JlbWFpbmluZ5SFlIxxQzpcVXNlcnNcTEVOT1ZPXERlc2t0b3BcT3Blbi1Xb3JsZCBBdXRvbm9tb3VzIE5hdmlnYXRpb25cdmVudlxMaWJcc2l0ZS1wYWNrYWdlc1xzdGFibGVfYmFzZWxpbmVzM1xjb21tb25cdXRpbHMucHmUjAg8bGFtYmRhPpSMIWdldF9zY2hlZHVsZV9mbi48bG9jYWxzPi48bGFtYmRhPpRLYUMa+IAApWWoTqhO0DtN0SxO1CxO0SZP1CZPgACUQwCUjA52YWx1ZV9zY2hlZHVsZZSFlCl0lFKUfZQojAtfX3BhY2thZ2VfX5SMGHN0YWJsZV9iYXNlbGluZXMzLmNvbW1vbpSMCF9fbmFtZV9flIwec3RhYmxlX2Jhc2VsaW5lczMuY29tbW9uLnV0aWxzlIwIX19maWxlX1+UaA51Tk5oAIwQX21ha2VfZW1wdHlfY2VsbJSTlClSlIWUdJRSlGgAjBJfZnVuY3Rpb25fc2V0c3RhdGWUk5RoIn2UfZQoaBqMCDxsYW1iZGE+lIwMX19xdWFsbmFtZV9flIwhZ2V0X3NjaGVkdWxlX2ZuLjxsb2NhbHM+LjxsYW1iZGE+lIwPX19hbm5vdGF0aW9uc19flH2UjA5fX2t3ZGVmYXVsdHNfX5ROjAxfX2RlZmF1bHRzX1+UTowKX19tb2R1bGVfX5RoG4wHX19kb2NfX5ROjAtfX2Nsb3N1cmVfX5RoAIwKX21ha2VfY2VsbJSTlGgCKGgHKEsBSwBLAEsBSwFLE0MIlQGXAIkBUwCUaAkpjAFflIWUaA6MBGZ1bmOUjBljb25zdGFudF9mbi48bG9jYWxzPi5mdW5jlEuFQwj4gADYDxKICpRoEowDdmFslIWUKXSUUpRoF05OaB4pUpSFlHSUUpRoJGhAfZR9lChoGowEZnVuY5RoKIwZY29uc3RhbnRfZm4uPGxvY2Fscz4uZnVuY5RoKn2UaCxOaC1OaC5oG2gvTmgwaDJHP8mZmZmZmZqFlFKUhZSMF19jbG91ZHBpY2tsZV9zdWJtb2R1bGVzlF2UjAtfX2dsb2JhbHNfX5R9lHWGlIZSMIWUUpSFlGhJXZRoS32UdYaUhlIwLg=="
+    },
+    "performance": {
+      "episodes": 20,
+      "success_rate": 65.0,
+      "collision_rate": 5.0,
+      "timeout_rate": 30.0,
+      "path_efficiency": 90.4,
+      "avg_length": 75.9,
+      "std_length": 88.2,
+      "avg_reward": 4.1,
+      "std_reward": 143.3
+    }
+  },
+  {
+    "filename": "ppo_navigation_final.zip",
+    "size_kb": 1771.7,
+    "last_modified": "Thu Oct 15 11:38:10 2026",
+    "net_arch": [
+      256,
+      256
+    ],
+    "total_params": 148229,
+    "policy_params": 74500,
+    "value_params": 73729,
+    "gamma": 0.99,
+    "learning_rate": 0.0003,
+    "ent_coef": 0.05,
+    "clip_range": {
+      ":type:": "<class 'function'>",
+      ":serialized:": "gAWV/gMAAAAAAACMF2Nsb3VkcGlja2xlLmNsb3VkcGlja2xllIwOX21ha2VfZnVuY3Rpb26Uk5QoaACMDV9idWlsdGluX3R5cGWUk5SMCENvZGVUeXBllIWUUpQoSwFLAEsASwFLBUsTQzSVAZcAdAEAAAAAAAAAAAAAAgCJAXwApgEAAKsBAAAAAAAAAACmAQAAqwEAAAAAAAAAAFMAlE6FlIwFZmxvYXSUhZSMEnByb2dyZXNzX3JlbWFpbmluZ5SFlIxxQzpcVXNlcnNcTEVOT1ZPXERlc2t0b3BcT3Blbi1Xb3JsZCBBdXRvbm9tb3VzIE5hdmlnYXRpb25cdmVudlxMaWJcc2l0ZS1wYWNrYWdlc1xzdGFibGVfYmFzZWxpbmVzM1xjb21tb25cdXRpbHMucHmUjAg8bGFtYmRhPpSMIWdldF9zY2hlZHVsZV9mbi48bG9jYWxzPi48bGFtYmRhPpRLYUMa+IAApWWoTqhO0DtN0SxO1CxO0SZP1CZPgACUQwCUjA52YWx1ZV9zY2hlZHVsZZSFlCl0lFKUfZQojAtfX3BhY2thZ2VfX5SMGHN0YWJsZV9iYXNlbGluZXMzLmNvbW1vbpSMCF9fbmFtZV9flIwec3RhYmxlX2Jhc2VsaW5lczMuY29tbW9uLnV0aWxzlIwIX19maWxlX1+UaA51Tk5oAIwQX21ha2VfZW1wdHlfY2VsbJSTlClSlIWUdJRSlGgAjBJfZnVuY3Rpb25fc2V0c3RhdGWUk5RoIn2UfZQoaBqMCDxsYW1iZGE+lIwMX19xdWFsbmFtZV9flIwhZ2V0X3NjaGVkdWxlX2ZuLjxsb2NhbHM+LjxsYW1iZGE+lIwPX19hbm5vdGF0aW9uc19flH2UjA5fX2t3ZGVmYXVsdHNfX5ROjAxfX2RlZmF1bHRzX1+UTowKX19tb2R1bGVfX5RoG4wHX19kb2NfX5ROjAtfX2Nsb3N1cmVfX5RoAIwKX21ha2VfY2VsbJSTlGgCKGgHKEsBSwBLAEsBSwFLE0MIlQGXAIkBUwCUaAkpjAFflIWUaA6MBGZ1bmOUjBljb25zdGFudF9mbi48bG9jYWxzPi5mdW5jlEuFQwj4gADYDxKICpRoEowDdmFslIWUKXSUUpRoF05OaB4pUpSFlHSUUpRoJGhAfZR9lChoGowEZnVuY5RoKIwZY29uc3RhbnRfZm4uPGxvY2Fscz4uZnVuY5RoKn2UaCxOaC1OaC5oG2gvTmgwaDJHP8mZmZmZmZqFlFKUhZSMF19jbG91ZHBpY2tsZV9zdWJtb2R1bGVzlF2UjAtfX2dsb2JhbHNfX5R9lHWGlIZSMIWUUpSFlGhJXZRoS32UdYaUhlIwLg=="
+    },
+    "performance": {
+      "episodes": 20,
+      "success_rate": 50.0,
+      "collision_rate": 0.0,
+      "timeout_rate": 50.0,
+      "path_efficiency": 90.0,
+      "avg_length": 110.6,
+      "std_length": 91.8,
+      "avg_reward": -40.0,
+      "std_reward": 148.3
+    }
+  }
+]

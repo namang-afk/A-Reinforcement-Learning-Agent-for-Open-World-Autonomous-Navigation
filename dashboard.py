@@ -101,15 +101,19 @@ class SimulationManager:
         self.seed: int = 42
 
     def _load_ppo_model(self):
-        if os.path.exists(self.model_path):
+        # Prefer best_model.zip if available, fallback to final or default
+        best_path = os.path.join(BASE_DIR, "models", "best_model.zip")
+        load_path = best_path if os.path.exists(best_path) else self.model_path
+
+        if os.path.exists(load_path):
             try:
-                self.ppo_model = PPO.load(self.model_path, device="cpu")
-                print(f"[Dashboard] Loaded PPO model from: {self.model_path}")
+                self.ppo_model = PPO.load(load_path, device="cpu")
+                print(f"[Dashboard] Loaded PPO model from: {load_path}")
             except Exception as e:
                 print(f"[Dashboard] Warning: Could not load PPO model: {e}")
                 self.ppo_model = None
         else:
-            print(f"[Dashboard] Notice: No model found at {self.model_path}. Baselines will be available.")
+            print(f"[Dashboard] Notice: No model found at {load_path}. Baselines will be available.")
             self.ppo_model = None
 
     def reset(
@@ -128,6 +132,7 @@ class SimulationManager:
         self.env = GridNavigationEnv(config=self.current_config)
         self.seed = seed
         self.cum_reward = 0.0
+        self._last_agent_pos = None
 
         self.current_obs, info = self.env.reset(seed=seed)
         self.astar_policy.set_env(self.env)
@@ -148,7 +153,11 @@ class SimulationManager:
         else:
             # PPO
             if self.ppo_model is not None:
-                action, _ = self.ppo_model.predict(self.current_obs, deterministic=True)
+                # If agent was blocked by a wall in the last step, sample stochastically to detour
+                use_det = True
+                if self._last_agent_pos is not None and self._last_agent_pos == self.env.agent_pos:
+                    use_det = False
+                action, _ = self.ppo_model.predict(self.current_obs, deterministic=use_det)
             else:
                 # Fallback to random if no PPO model is loaded
                 action, _ = self.random_policy.predict(self.current_obs)
@@ -159,6 +168,7 @@ class SimulationManager:
         else:
             action = int(action)
 
+        self._last_agent_pos = self.env.agent_pos
         obs, reward, terminated, truncated, info = self.env.step(action)
         self.current_obs = obs
         self.cum_reward += reward

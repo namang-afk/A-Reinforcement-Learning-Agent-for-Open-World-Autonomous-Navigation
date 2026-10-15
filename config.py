@@ -54,32 +54,32 @@ class TrainConfig:
     """PPO training configuration."""
 
     # PPO hyperparameters
-    learning_rate: float = 5e-4
-    n_steps: int = 2048
+    learning_rate: float = 3e-4
+    n_steps: int = 1024
     batch_size: int = 64
     n_epochs: int = 10
     gamma: float = 0.99
     gae_lambda: float = 0.95
     clip_range: float = 0.2
-    ent_coef: float = 0.04
+    ent_coef: float = 0.05
     vf_coef: float = 0.5
     max_grad_norm: float = 0.5
 
-    # Neural network architecture
-    net_arch: List[int] = field(default_factory=lambda: [128, 128])
+    # Neural network architecture: upgraded to 256x256 for complex corridor reasoning
+    net_arch: List[int] = field(default_factory=lambda: [256, 256])
 
     # Training duration
-    total_timesteps: int = 500_000
+    total_timesteps: int = 200_000
 
     # Checkpointing
-    checkpoint_freq: int = 50_000  # Save every N timesteps
+    checkpoint_freq: int = 25_000  # Save every N timesteps
     log_interval: int = 10  # Log every N rollouts
 
     # Reproducibility
     seed: int = 42
 
     # Number of parallel environments for training
-    n_envs: int = 4
+    n_envs: int = 8
 
     # Paths
     model_dir: str = "models"

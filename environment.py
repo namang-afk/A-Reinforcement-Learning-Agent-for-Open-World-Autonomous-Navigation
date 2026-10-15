@@ -98,6 +98,8 @@ class GridNavigationEnv(gym.Env):
         self._generate_map()
         self.steps = 0
         self.prev_dist = self._manhattan_distance(self.agent_pos, self.target_pos)
+        self.min_dist = self.prev_dist
+        self.visit_counts = {self.agent_pos: 1}
         self.trajectory = [self.agent_pos]
 
         obs = self._get_observation()
@@ -138,7 +140,7 @@ class GridNavigationEnv(gym.Env):
         # --- Boundary & Wall Check --------------------------------------------
         if not self._in_bounds(new_row, new_col) or self.grid[new_row, new_col] == 1:
             # Wall bump: penalize, agent stays in place, does not terminate
-            reward += -0.5
+            reward += -1.0
         elif self.grid[new_row, new_col] == 2:
             # Dynamic obstacle collision: lethal hazard!
             reward += self.config.reward_collision
@@ -153,11 +155,20 @@ class GridNavigationEnv(gym.Env):
                 reward += self.config.reward_goal
                 terminated = True
             else:
-                # Progress shaping
+                # Potential-based progress shaping
                 curr_dist = self._manhattan_distance(self.agent_pos, self.target_pos)
-                progress = self.prev_dist - curr_dist
-                reward += self.config.reward_progress_scale * progress
+                if curr_dist < self.min_dist:
+                    reward += self.config.reward_progress_scale * (self.min_dist - curr_dist)
+                    self.min_dist = curr_dist
+                elif curr_dist > self.prev_dist:
+                    reward += -0.2
                 self.prev_dist = curr_dist
+
+                # Anti-stagnation loop penalty
+                cnt = self.visit_counts.get(self.agent_pos, 0) + 1
+                self.visit_counts[self.agent_pos] = cnt
+                if cnt > 2:
+                    reward -= 0.1 * min(cnt - 2, 5)
 
         # --- Check if agent's current cell now has a dynamic obstacle ---------
         if not terminated:
