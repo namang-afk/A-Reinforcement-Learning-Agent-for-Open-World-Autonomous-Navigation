@@ -21,10 +21,10 @@ class EnvConfig:
     view_size: int = 5
 
     # Obstacle density: fraction of free cells to fill with walls
-    wall_density: float = 0.15
+    wall_density: float = 0.10
 
     # Number of dynamic (moving) obstacles
-    num_dynamic_obstacles: int = 3
+    num_dynamic_obstacles: int = 2
 
     # Dynamic obstacle movement probability per step
     dynamic_move_prob: float = 0.3
@@ -36,10 +36,10 @@ class EnvConfig:
     reward_goal: float = 100.0
     reward_collision: float = -10.0
     reward_step: float = -0.1
-    reward_progress_scale: float = 1.0
+    reward_progress_scale: float = 1.5
 
     # Minimum Manhattan distance between start and goal
-    min_start_goal_distance: int = 10
+    min_start_goal_distance: int = 5
 
     def __post_init__(self):
         assert self.grid_size >= 10, "Grid size must be at least 10"
@@ -54,14 +54,14 @@ class TrainConfig:
     """PPO training configuration."""
 
     # PPO hyperparameters
-    learning_rate: float = 3e-4
+    learning_rate: float = 5e-4
     n_steps: int = 2048
     batch_size: int = 64
     n_epochs: int = 10
     gamma: float = 0.99
     gae_lambda: float = 0.95
     clip_range: float = 0.2
-    ent_coef: float = 0.01
+    ent_coef: float = 0.04
     vf_coef: float = 0.5
     max_grad_norm: float = 0.5
 

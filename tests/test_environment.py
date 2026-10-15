@@ -228,8 +228,8 @@ class TestTermination:
             f"Episode ran for {step + 1} steps without terminating"
         )
 
-    def test_wall_collision_terminates(self):
-        """Hitting a wall should terminate the episode."""
+    def test_wall_collision_penalized_and_blocks_movement(self):
+        """Hitting a wall should penalize the agent and block movement without dying."""
         config = EnvConfig(
             grid_size=10, wall_density=0.0, num_dynamic_obstacles=0,
             max_steps=100, min_start_goal_distance=3,
@@ -237,14 +237,15 @@ class TestTermination:
         env = GridNavigationEnv(config=config)
         env.reset(seed=42)
 
-        # Move agent to the border
-        env.agent_pos = (0, 5)  # Top border (wall)
+        # Place agent at row 1 (just below top border)
+        env.agent_pos = (1, 5)
         env.prev_dist = env._manhattan_distance(env.agent_pos, env.target_pos)
 
-        # Try to move up (out of bounds)
-        _, reward, terminated, _, _ = env.step(0)  # Up
-        assert terminated, "Moving into wall should terminate episode"
-        assert reward < 0, "Collision should give negative reward"
+        # Try to move up into the border wall
+        obs, reward, terminated, truncated, _ = env.step(0)  # Up
+        assert not terminated, "Static wall bump should not terminate episode"
+        assert reward < 0, "Wall bump should give negative reward penalty"
+        assert env.agent_pos == (1, 5), "Agent should stay in place when bumping wall"
 
 
 # ---------------------------------------------------------------------------

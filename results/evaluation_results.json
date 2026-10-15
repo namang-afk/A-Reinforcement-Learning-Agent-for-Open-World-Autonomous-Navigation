@@ -1,35 +1,35 @@
 {
   "PPO Agent": {
     "policy_name": "PPO Agent",
-    "n_episodes": 15,
-    "success_rate": 0.0,
-    "avg_episode_length": 196.0,
-    "avg_reward": -10.73333333333331,
-    "collision_rate": 0.06666666666666667,
-    "avg_path_efficiency": null,
-    "std_reward": 4.4492196569236215,
-    "std_episode_length": 14.966629547095765
+    "n_episodes": 50,
+    "success_rate": 0.36,
+    "avg_episode_length": 130.12,
+    "avg_reward": 9.358000000000088,
+    "collision_rate": 0.02,
+    "avg_path_efficiency": 0.9420054200542006,
+    "std_reward": 88.15482083244216,
+    "std_episode_length": 90.63302709277671
   },
   "Random": {
     "policy_name": "Random",
-    "n_episodes": 15,
-    "success_rate": 0.0,
-    "avg_episode_length": 7.2,
-    "avg_reward": -11.053333333333336,
-    "collision_rate": 1.0,
-    "avg_path_efficiency": null,
-    "std_reward": 2.973632271967885,
-    "std_episode_length": 7.350283441246784
+    "n_episodes": 50,
+    "success_rate": 0.2,
+    "avg_episode_length": 142.12,
+    "avg_reward": -6.462000000000078,
+    "collision_rate": 0.34,
+    "avg_path_efficiency": 0.12079214953527635,
+    "std_reward": 52.920264133883585,
+    "std_episode_length": 68.4688659172912
   },
   "A*": {
     "policy_name": "A*",
-    "n_episodes": 15,
-    "success_rate": 0.8,
-    "avg_episode_length": 13.333333333333334,
-    "avg_reward": 88.59999999999998,
-    "collision_rate": 0.2,
+    "n_episodes": 50,
+    "success_rate": 0.96,
+    "avg_episode_length": 12.16,
+    "avg_reward": 110.88400000000001,
+    "collision_rate": 0.04,
     "avg_path_efficiency": 1.0,
-    "std_reward": 47.366823832720726,
-    "std_episode_length": 5.399588461684423
+    "std_reward": 25.00501837631798,
+    "std_episode_length": 5.251133211031691
   }
 }

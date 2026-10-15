@@ -135,17 +135,12 @@ class GridNavigationEnv(gym.Env):
         truncated = False
         reward = self.config.reward_step  # base step penalty
 
-        # --- Boundary check ---------------------------------------------------
-        if not self._in_bounds(new_row, new_col):
-            # Wall collision (boundary)
-            reward += self.config.reward_collision
-            terminated = True
-        elif self.grid[new_row, new_col] == 1:
-            # Wall collision (static obstacle)
-            reward += self.config.reward_collision
-            terminated = True
+        # --- Boundary & Wall Check --------------------------------------------
+        if not self._in_bounds(new_row, new_col) or self.grid[new_row, new_col] == 1:
+            # Wall bump: penalize, agent stays in place, does not terminate
+            reward += -0.5
         elif self.grid[new_row, new_col] == 2:
-            # Dynamic obstacle collision
+            # Dynamic obstacle collision: lethal hazard!
             reward += self.config.reward_collision
             terminated = True
         else:
@@ -340,19 +335,24 @@ class GridNavigationEnv(gym.Env):
                 if self._in_bounds(gr, gc):
                     local_view[dr + half, dc + half] = float(self.grid[gr, gc])
 
+        # Normalize local view: 0=free, 0.33=wall, 0.66=dynamic obs, 1.0=target
+        local_view = local_view / 3.0
+
         # Normalize positions
         norm_pos = np.array(
             [r / self.grid_size, c / self.grid_size], dtype=np.float32
         )
-        rel_target = np.array(
-            [
-                (self.target_pos[0] - r) / self.grid_size,
-                (self.target_pos[1] - c) / self.grid_size,
-            ],
+
+        # Scale-invariant unit direction vector to target
+        dx = self.target_pos[0] - r
+        dy = self.target_pos[1] - c
+        dist = abs(dx) + abs(dy)
+        unit_target = np.array(
+            [dx / max(dist, 1), dy / max(dist, 1)],
             dtype=np.float32,
         )
 
-        obs = np.concatenate([local_view.flatten(), norm_pos, rel_target])
+        obs = np.concatenate([local_view.flatten(), norm_pos, unit_target])
         return obs
 
     # ------------------------------------------------------------------
