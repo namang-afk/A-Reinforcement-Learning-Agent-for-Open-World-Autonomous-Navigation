@@ -23,6 +23,7 @@ const state = {
   isPlaying: false,
   isRunningFull: false,
   isStepping: false,
+  isExplicitStep: false,
   playSpeed: 5, // steps per second
   intervalId: null,
   animTimer: null,
@@ -96,10 +97,10 @@ async function checkBackendStatus() {
 }
 
 async function resetEnvironment(newMap = false) {
-  // 1. Immediately pause and cancel any running simulation or animation
+  // 1. Immediately pause and hard-stop any active simulation, play loop, or animation
   pause();
 
-  // 2. Advance generation counter to immediately invalidate any in-flight step responses
+  // 2. Advance generation counter to immediately invalidate any in-flight step or run responses
   const currentGen = ++state.generationId;
 
   // 3. Abort in-flight network request if one is active
@@ -145,6 +146,9 @@ async function resetEnvironment(newMap = false) {
     state.isTruncated = false;
     state.isSuccess = false;
 
+    // Hard reaffirm pause and stopped simulation state
+    pause();
+
     actionChosenBadge.textContent = '--';
     updateUI();
     renderMainGrid();
@@ -153,18 +157,26 @@ async function resetEnvironment(newMap = false) {
     if (newMap) {
       showToast(`Generated Map Seed #${payload.seed}`, '🗺️');
     } else {
-      showToast('Agent Reset to Start Position', '↺');
+      showToast('Agent Reset to Start Position (Simulation Stopped)', '↺');
     }
   } catch (err) {
     if (err.name === 'AbortError') return;
     console.error('Reset error:', err);
     showToast('Failed to reset environment', '⚠️');
+  } finally {
+    if (currentGen === state.generationId) {
+      pause();
+    }
   }
 }
 
 async function stepEnvironment(manualAction = null) {
   if (state.isTerminated || state.isTruncated) {
     pause();
+    return;
+  }
+  // If not playing and this was not an explicit user action (manual key or step button), STOP!
+  if (manualAction === null && !state.isPlaying && !state.isExplicitStep) {
     return;
   }
   if (state.isStepping) {
@@ -192,6 +204,9 @@ async function stepEnvironment(manualAction = null) {
 
     // Check if reset was pressed while request was in-flight
     if (currentGen !== state.generationId) return;
+
+    // Check if user paused while in flight (for auto steps)
+    if (manualAction === null && !state.isExplicitStep && !state.isPlaying) return;
 
     state.agentPos = data.agent_pos;
     state.dynamicObstacles = data.dynamic_obstacles || [];
@@ -551,19 +566,26 @@ function recordEpisodeHistory(result) {
 // Playback Loop
 // ---------------------------------------------------------------------------
 
-function play() {
+async function play() {
   if (state.isPlaying) return;
+
+  const currentGen = state.generationId;
   // If already at terminal state, reset first before starting playback
-  if (state.isTerminated || state.isTruncated) {
-    resetEnvironment(false).then(() => {
-      startPlayLoop();
-    });
-    return;
+  if (state.isTerminated || state.isTruncated || state.isSuccess) {
+    await resetEnvironment(false);
+    // If generation changed or user pressed pause/reset during reset, do NOT proceed into playback!
+    if (state.generationId !== currentGen + 1) {
+      return;
+    }
   }
   startPlayLoop();
 }
 
 function startPlayLoop() {
+  if (state.intervalId) {
+    clearInterval(state.intervalId);
+    state.intervalId = null;
+  }
   state.isPlaying = true;
   btnPlay.textContent = '⏸ Pause';
   btnPlay.classList.remove('btn-primary');
@@ -571,6 +593,13 @@ function startPlayLoop() {
 
   const interval = Math.max(1000 / state.playSpeed, 40);
   state.intervalId = setInterval(() => {
+    if (!state.isPlaying) {
+      if (state.intervalId) {
+        clearInterval(state.intervalId);
+        state.intervalId = null;
+      }
+      return;
+    }
     stepEnvironment();
   }, interval);
 }
@@ -578,6 +607,7 @@ function startPlayLoop() {
 function pause() {
   state.isPlaying = false;
   state.isRunningFull = false;
+  state.isStepping = false;
 
   btnPlay.textContent = '▶ Play';
   btnPlay.classList.remove('btn-secondary');
@@ -610,21 +640,27 @@ btnPlay.addEventListener('click', () => {
 
 btnStep.addEventListener('click', () => {
   pause();
-  stepEnvironment();
+  state.isExplicitStep = true;
+  stepEnvironment().finally(() => {
+    state.isExplicitStep = false;
+  });
 });
 
 btnRunFull.addEventListener('click', runFullEpisode);
 
 btnResetAgent.addEventListener('click', () => {
+  pause();
   resetEnvironment(false);
 });
 
 btnGenerateMap.addEventListener('click', () => {
+  pause();
   state.seed = parseInt(mapSeedInput.value);
   resetEnvironment(true);
 });
 
 btnRandomSeed.addEventListener('click', () => {
+  pause();
   const newSeed = Math.floor(Math.random() * 10000);
   mapSeedInput.value = newSeed;
   state.seed = newSeed;
